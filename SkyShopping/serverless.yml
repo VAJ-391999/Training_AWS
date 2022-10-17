@@ -1,0 +1,12 @@
+service: SkyShopping
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  - ${file(./src/user/user.yml)}
