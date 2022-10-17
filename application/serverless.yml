@@ -1,0 +1,17 @@
+service: application
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http:
+          path: /hello
+          method: GET
