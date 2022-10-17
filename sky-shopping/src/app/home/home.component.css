@@ -1,0 +1,57 @@
+.home {
+    background-image: url("../../assets/shttoing-start.jpg");
+    /* background-color: black; */
+    background-size: cover;
+    height: 100vh;
+    width: auto;
+    background-repeat: no-repeat;
+}
+
+.home .home-center {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    height: auto;
+}
+
+.home .home-title p {
+    color: #A2A2A1FF;
+    font-size: 100px;
+    line-height: 1;
+    height: auto;
+}
+
+.home .home-btn-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.home .home-btn-section button {
+    height: 60px;
+    width: 100%;
+    font-size: 25px;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+.btn-home-login {
+    background-color: #1e2b58;
+    color: #A2A2A1FF;
+}
+
+.btn-home-login:hover {
+    background-color: #A2A2A1FF;
+    color: #1e2b58;
+}
+
+.btn-home-register {
+    background-color: #A2A2A1FF;
+    color: #1e2b58;
+}
+
+.btn-home-register:hover {
+    background-color: #1e2b58;
+    color: #A2A2A1FF;
+}
