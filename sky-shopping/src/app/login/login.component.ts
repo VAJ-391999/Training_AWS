@@ -42,14 +42,18 @@ export class LoginComponent implements OnInit {
         email: form.value.email,
         password: form.value.password,
       })
-      .subscribe((data) => {
-        console.log('Login component', data);
-        this.error = data.error;
-        this.message = data.message;
-        if (data.data) {
+      .subscribe({
+        next: (data) => {
+          this.error = data.error;
+          this.message = data.message;
           console.log('DAta', data.data);
+        },
+        error: (error) => {
+          window.alert(error);
+        },
+        complete: () => {
           this.router.navigate(['/products']);
-        }
+        },
       });
   };
 }

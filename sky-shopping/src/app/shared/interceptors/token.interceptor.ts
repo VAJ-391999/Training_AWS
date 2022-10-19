@@ -32,11 +32,21 @@ export class TokenInterceptorService implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       catchError((err) => {
+        console.log(err);
         if (err.status === 401) {
           this.authService.userLogout();
         }
-        const error = err.error.message || err.statusText;
-        return throwError(error);
+        let errorMessage;
+
+        if (err.error instanceof ErrorEvent) {
+          errorMessage = `Error: ${err.error.message}`;
+        } else {
+          errorMessage = `Error Code: ${err.status}\nMessage: ${
+            err.statusText || err.message
+          }`;
+        }
+        window.alert(errorMessage);
+        return throwError(errorMessage);
       })
     );
   }

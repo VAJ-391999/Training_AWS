@@ -24,17 +24,24 @@ export class AuthService {
         map((res) => {
           console.log('Login Response', res);
           if (res.data !== null) {
+            localStorage.setItem('userValue', res.data);
             this.isAuthenticated.next(true);
+            this.userValue.next(res.data);
           }
-          this.userValue.next(res.data);
           return res;
         })
       );
   };
 
+  isLoggedIn = () => {
+    console.log(localStorage.getItem('userValue'));
+    return localStorage.getItem('userValue') !== null ? true : false;
+  };
+
   userLogout = () => {
     this.userValue.next(null);
     this.isAuthenticated.next(false);
+    localStorage.removeItem('userValue');
     this.router.navigate(['/login']);
   };
 }

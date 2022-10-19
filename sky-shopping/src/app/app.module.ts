@@ -11,13 +11,18 @@ import { AuthService } from './shared/services/auth.service';
 import { AdminComponent } from './admin/admin.component';
 import { TokenInterceptorService } from './shared/interceptors/token.interceptor';
 import { ProductService } from './products/products.service';
-import { AuthOnLoadGuardService } from './shared/guards/auth.guard';
-import { AuthGuardService } from './shared/guards/auth-onload.guard';
+import { AuthOnLoadGuardService } from './shared/guards/auth-onload.guard';
+import { AuthGuardService } from './shared/guards/auth.guard';
 import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, AdminComponent, HeaderComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    AdminComponent,
+    HeaderComponent,
+    NotFoundComponent,
+  ],
   imports: [
     AppRouter,
     BrowserModule,
