@@ -1,0 +1,22 @@
+.not-found {
+    background-image: url('../../assets/shttoing-start.jpg');
+    background-size: cover;
+    height: 100vh;
+    width: auto;
+    background-repeat: no-repeat;
+}
+
+.not-found .not-found-content {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    height: auto;
+}
+
+.not-found .not-found-content p {
+    color: #A2A2A1FF;
+    font-size: 100px;
+    line-height: 1;
+    height: auto;
+}

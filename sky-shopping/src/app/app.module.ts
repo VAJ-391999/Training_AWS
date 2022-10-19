@@ -14,9 +14,10 @@ import { ProductService } from './products/products.service';
 import { AuthOnLoadGuardService } from './shared/guards/auth.guard';
 import { AuthGuardService } from './shared/guards/auth-onload.guard';
 import { HeaderComponent } from './header/header.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, AdminComponent, HeaderComponent],
+  declarations: [AppComponent, AdminComponent, HeaderComponent, NotFoundComponent],
   imports: [
     AppRouter,
     BrowserModule,
