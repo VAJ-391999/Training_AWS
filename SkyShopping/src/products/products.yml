@@ -1,0 +1,7 @@
+getProducts:
+  handler: src/products/functions/getProducts.handler
+  events:
+    - http:
+        path: /products
+        method: GET
+        authorizer: ${self:custom.authorizer.users}

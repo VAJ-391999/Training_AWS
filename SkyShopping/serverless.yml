@@ -10,3 +10,14 @@ plugins:
 
 functions:
   - ${file(./src/user/user.yml)}
+  - ${file(./src/products/products.yml)}
+  - ${file(./src/auth/auth.yml)}
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  authorizer:
+    users:
+      name: authorizerUser
+      type: TOKEN
+      identitySource: method.request.header.Authorization
+      identityValidationExpression: Bearer (.*)

@@ -1,6 +1,18 @@
 hello:
-  handler: src/customer/functions/handler.hello
+  handler: src/user/functions/handler.hello
   events:
     - http:
         path: /hello
         method: GET
+registration:
+  handler: src/user/functions/registration.handler
+  events:
+    - http:
+        path: /registration
+        method: POST
+login:
+  handler: src/user/functions/login.handler
+  events:
+    - http:
+        path: /login
+        method: POST

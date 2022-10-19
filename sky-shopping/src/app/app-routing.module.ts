@@ -8,6 +8,23 @@ const routes: Route[] = [
   },
   {
     path: '',
+    loadChildren: () =>
+      import('./registration/registration.module').then(
+        (m) => m.RegistrationModule
+      ),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./products/products.module').then((m) => m.ProductRouter),
+  },
+  {
+    path: '',
     redirectTo: '',
     pathMatch: 'full',
   },

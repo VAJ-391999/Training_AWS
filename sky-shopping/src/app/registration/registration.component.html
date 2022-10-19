@@ -1,0 +1,136 @@
+<div class="registration">
+    <mat-grid-list cols="2">
+        <mat-grid-tile>
+            <div class="registration-title">
+                <p>Sky</p><br>
+                <p>Shopping</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="registration-form">
+                <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)">
+
+                    <mat-form-field class="name-field" appearance="fill">
+                        <mat-label>First Name</mat-label>
+                        <input type="text" name="firstName" id="firstName" matInput formControlName="firstName" placeholder="Tina">
+                        <mat-error *ngIf="registrationForm.get('firstName')!.hasError('required')">
+                            First Name is required filed
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('firstName')!.hasError('pattern')">
+                            First Name should only contain characters
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('firstName')!.hasError('minlength')">
+                            First Name must at least 3 character long
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('firstName')!.hasError('maxlength')">
+                            First Name must not have more than 12 characters
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field class="lastName-field" appearance="fill">
+                        <mat-label>Last name</mat-label>
+                        <input type="text" name="lastName" id="lastName" matInput formControlName="lastName"
+                            placeholder="Sharma">
+                        <mat-error *ngIf="registrationForm.get('lastName')!.hasError('required')">
+                            Last Name is required filed
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('lastName')!.hasError('pattern')">
+                            Last Name only can have characters
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('lastName')!.hasError('minLength')">
+                            Last Name must at least 3 character long
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('lastName')!.hasError('maxLength')">
+                            Last Name must not have more than 12 characters
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="middleName-field" appearance="fill">
+                        <mat-label>Middle name</mat-label>
+                        <input type="text" name="middleName" id="middleName" matInput formControlName="middleName"
+                            placeholder="Shankar">
+                        <mat-error *ngIf="registrationForm.get('middleName')!.hasError('required')">
+                            Middle Name is required filed
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('middleName')!.hasError('pattern')">
+                            Middle Name only can have characters
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('middleName')!.hasError('minLength')">
+                            Middle Name must at least 3 character long
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('middleName')!.hasError('maxLength')">
+                            Middle Name must not have more than 12 characters
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field class="email-field" appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input type="text" name="email" id="email" matInput formControlName="email"
+                            placeholder="tina@gmail.com">
+                        <mat-error *ngIf="registrationForm.get('email')!.hasError('required')">
+                            Email is required filed
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('email')!.hasError('email')">
+                            Email should be valid
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field class="phone-field" appearance="fill">
+                        <mat-label>Phone Number</mat-label>
+                        <input type="text" name="mobile" id="mobile" matInput formControlName="phoneNumber"
+                            placeholder="+91-8765432367">
+                        <mat-error *ngIf="registrationForm.get('phoneNumber')!.hasError('required')">
+                            Phone number is required filed
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('phoneNumber')!.hasError('pattern')">
+                            Phone number should be valid
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field class="password-field" appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input type="password" name="password" id="password" matInput formControlName="password"
+                            placeholder="Tina#2022"
+                            compare-password-validator="confirmPassword"
+                            reverse="true">
+                        <mat-error *ngIf="registrationForm.get('password')!.hasError('required')">
+                            Password is required filed
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('password')!.hasError('pattern')">
+                            Password should contain at least 1 lower case character, 1 upper case character, 1 digit, 1 special
+                            character
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field class="confirm-password-field" appearance="fill">
+                        <mat-label>Confirm Password</mat-label>
+                        <input 
+                            type="password"
+                            name="confirm-password"
+                            id="confirm-password" 
+                            matInput
+                            formControlName="confirmPassword" 
+                            placeholder="Tina#2022" 
+                            compare-password-validator="password"
+                            >
+                        <mat-error *ngIf="registrationForm.get('confirmPassword')!.hasError('required')">
+                            Confirm Password is required field
+                        </mat-error>
+                        <mat-error *ngIf="registrationForm.get('password')!.hasError('pattern')">
+                            Password should contain at least 1 lower case character, 1 upper case character, 1 digit, 1 special
+                            character
+                        </mat-error>
+                        <mat-error
+                        *ngIf="registrationForm.get('confirmPassword')!.hasError('validateEqual')">
+                            confirm password must match with password
+                        </mat-error>
+        
+                    </mat-form-field>
+        
+                    <button class="btn-register" mat-raised-button color="primary"
+                        [disabled]="!registrationForm.valid">Submit</button>
+                </form>
+            </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+</div>

@@ -1,0 +1,2 @@
+authorizerUser:
+  handler: src/auth/functions/auth.handler

@@ -15,9 +15,12 @@ export class User extends TimeStamps implements Base {
   @Prop()
   middleName: string;
 
-  @Prop()
+  @Prop({ unique: true })
   email: string;
 
   @Prop()
   phoneNumber: string;
+
+  @Prop()
+  password: string;
 }
