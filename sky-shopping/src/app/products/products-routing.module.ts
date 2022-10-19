@@ -6,6 +6,8 @@ export const productRoutes: Route[] = [
   {
     path: 'products',
     component: ProductsComponent,
+    // canLoad: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 ];
 

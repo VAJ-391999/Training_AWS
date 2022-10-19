@@ -43,9 +43,11 @@ export class LoginComponent implements OnInit {
         password: form.value.password,
       })
       .subscribe((data) => {
+        console.log('Login component', data);
         this.error = data.error;
         this.message = data.message;
-        if (!this.error && data.data) {
+        if (data.data) {
+          console.log('DAta', data.data);
           this.router.navigate(['/products']);
         }
       });

@@ -11,9 +11,12 @@ import { AuthService } from './shared/services/auth.service';
 import { AdminComponent } from './admin/admin.component';
 import { TokenInterceptorService } from './shared/interceptors/token.interceptor';
 import { ProductService } from './products/products.service';
+import { AuthOnLoadGuardService } from './shared/guards/auth.guard';
+import { AuthGuardService } from './shared/guards/auth-onload.guard';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, AdminComponent],
+  declarations: [AppComponent, AdminComponent, HeaderComponent],
   imports: [
     AppRouter,
     BrowserModule,
@@ -25,6 +28,8 @@ import { ProductService } from './products/products.service';
     UserService,
     AuthService,
     ProductService,
+    AuthGuardService,
+    AuthOnLoadGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -10,6 +10,7 @@ import { User } from '../types/user';
 @Injectable()
 export class AuthService {
   userValue = new Subject<string | null>();
+  isAuthenticated = new Subject<boolean>();
   constructor(
     private readonly httpClient: HttpClient,
     private readonly router: Router
@@ -22,7 +23,9 @@ export class AuthService {
         take(1),
         map((res) => {
           console.log('Login Response', res);
-          // localStorage.setItem('userValue', res.data)
+          if (res.data !== null) {
+            this.isAuthenticated.next(true);
+          }
           this.userValue.next(res.data);
           return res;
         })
@@ -31,6 +34,7 @@ export class AuthService {
 
   userLogout = () => {
     this.userValue.next(null);
+    this.isAuthenticated.next(false);
     this.router.navigate(['/login']);
   };
 }

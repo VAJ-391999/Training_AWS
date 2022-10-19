@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import { AuthOnLoadGuardService as AuthOnLoadGuard } from './shared/guards/auth.guard';
+import { AuthGuardService as AuthGuard } from './shared/guards/auth-onload.guard';
 
 const routes: Route[] = [
   {
@@ -22,6 +24,8 @@ const routes: Route[] = [
     path: '',
     loadChildren: () =>
       import('./products/products.module').then((m) => m.ProductRouter),
+    canLoad: [AuthOnLoadGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: '',
