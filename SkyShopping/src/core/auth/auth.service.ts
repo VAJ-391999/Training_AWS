@@ -41,6 +41,7 @@ export class AuthService {
     const token: string = this.generateToken({
       id: foundUser._id.toString(),
       email: foundUser.email,
+      role: foundUser.role,
     });
     console.log("token", token);
     return token;

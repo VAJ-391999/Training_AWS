@@ -8,27 +8,25 @@ import { DirectiveModule } from './shared/directives/directive.module';
 import { UserService } from './shared/services/user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
-import { AdminComponent } from './admin/admin.component';
 import { TokenInterceptorService } from './shared/interceptors/token.interceptor';
 import { ProductService } from './products/products.service';
 import { AuthOnLoadGuardService } from './shared/guards/auth-onload.guard';
 import { AuthGuardService } from './shared/guards/auth.guard';
 import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RoleGuardService } from './shared/guards/role.guard';
+import { SharedModule } from './shared/shared.module';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdminComponent,
-    HeaderComponent,
-    NotFoundComponent,
-  ],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     AppRouter,
     BrowserModule,
     BrowserAnimationsModule,
     DirectiveModule,
     HttpClientModule,
+    SharedModule,
   ],
   providers: [
     UserService,
@@ -36,6 +34,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ProductService,
     AuthGuardService,
     AuthOnLoadGuardService,
+    RoleGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

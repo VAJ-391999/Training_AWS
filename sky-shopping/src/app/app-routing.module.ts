@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { AuthGuardService } from './shared/guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RoleGuardService } from './shared/guards/role.guard';
 
 const routes: Route[] = [
   {
@@ -21,11 +22,21 @@ const routes: Route[] = [
       import('./login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: '',
-    canActivate: [AuthGuardService],
+    path: 'admin',
+    canActivate: [AuthGuardService, RoleGuardService],
+    data: {
+      expectedRole: 'admin',
+    },
     loadChildren: () =>
-      import('./products/products.module').then((m) => m.ProductRouter),
-    // canLoad: [AuthOnLoadGuard],
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'user',
+    canActivate: [AuthGuardService, RoleGuardService],
+    data: {
+      expectedRole: 'user',
+    },
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
   {
     path: '**',

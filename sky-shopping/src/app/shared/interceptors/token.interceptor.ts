@@ -19,9 +19,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.authService.userValue.subscribe((data) => {
-      this.token = data;
-    });
+    this.token = this.authService.getToken();
     console.log('Token', this.token);
     if (this.token) {
       request = request.clone({

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { REGEX_PATTERN } from '../shared/common/regex-pattern';
 import { AuthService } from '../shared/services/auth.service';
 import { UserService } from '../shared/services/user.service';
@@ -10,18 +11,28 @@ import { UserService } from '../shared/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   error: boolean = false;
   message: string = '';
+  roleSubscription!: Subscription;
+  role!: string;
 
   constructor(
     private readonly router: Router,
     private readonly authService: AuthService,
     private readonly formBuilder: FormBuilder
   ) {}
+  ngOnDestroy(): void {
+    console.log('Login unsubscribe');
+    // this.roleSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      console.log('Data');
+      this.router.navigate(['/user']);
+    }
     this.onInit();
   }
 
@@ -36,7 +47,6 @@ export class LoginComponent implements OnInit {
   };
 
   onSubmit = (form: FormGroup) => {
-    console.log('Login form', form);
     this.authService
       .userLogin({
         email: form.value.email,
@@ -46,13 +56,12 @@ export class LoginComponent implements OnInit {
         next: (data) => {
           this.error = data.error;
           this.message = data.message;
-          console.log('DAta', data.data);
         },
         error: (error) => {
           window.alert(error);
         },
         complete: () => {
-          this.router.navigate(['/products']);
+          this.router.navigate(['/user']);
         },
       });
   };

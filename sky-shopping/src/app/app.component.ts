@@ -13,13 +13,7 @@ export class AppComponent implements OnInit {
   isAuthenticated!: boolean;
 
   constructor(private readonly authService: AuthService) {}
-  ngOnInit(): void {
-    this.authSubscription = this.authService.isAuthenticated.subscribe(
-      (isAuth) => {
-        this.isAuthenticated = isAuth;
-      }
-    );
-  }
+  ngOnInit(): void {}
 
   onLogout = () => {
     this.authService.userLogout();
