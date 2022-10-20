@@ -1,7 +1,14 @@
-getProducts:
-  handler: src/products/functions/getProducts.handler
+getProductList:
+  handler: src/products/functions/getProductList.handler
   events:
     - http:
         path: /products
         method: GET
+        authorizer: ${self:custom.authorizer.users}
+createProduct:
+  handler: src/products/functions/createProduct.handler
+  events:
+    - http:
+        path: /product/new
+        method: POST
         authorizer: ${self:custom.authorizer.users}

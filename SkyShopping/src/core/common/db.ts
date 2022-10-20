@@ -1,12 +1,15 @@
 import { getModelForClass } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import { config } from "../config/config";
+import { Product } from "../products/model/product.";
 import { User } from "../user/model/user";
 import { MONGOOSE_CONNECTION_STATE } from "./dbConnectionState";
 
 export class MongoDb {
   private connection: any;
   userModel: any;
+  productModel: any;
+
   constructor() {}
 
   public getDatabaseConnection() {
@@ -36,5 +39,6 @@ export class MongoDb {
 
   private populate = () => {
     this.userModel = getModelForClass(User);
+    this.productModel = getModelForClass(Product);
   };
 }

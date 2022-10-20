@@ -12,11 +12,11 @@ import { TokenInterceptorService } from './shared/interceptors/token.interceptor
 import { ProductService } from './products/products.service';
 import { AuthOnLoadGuardService } from './shared/guards/auth-onload.guard';
 import { AuthGuardService } from './shared/guards/auth.guard';
-import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RoleGuardService } from './shared/guards/role.guard';
 import { SharedModule } from './shared/shared.module';
-import { UserComponent } from './user/user.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './loader/loader.reducer';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -27,6 +27,7 @@ import { UserComponent } from './user/user.component';
     DirectiveModule,
     HttpClientModule,
     SharedModule,
+    StoreModule.forRoot({ loader: reducer }),
   ],
   providers: [
     UserService,

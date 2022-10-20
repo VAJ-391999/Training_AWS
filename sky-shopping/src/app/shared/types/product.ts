@@ -1,0 +1,13 @@
+export interface Product {
+  id: string;
+  _id: string;
+  name: string;
+  unitPrice: number;
+  imageUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export type CreateProduct = Omit<
+  Product,
+  'id' | '_id' | 'createdAt' | 'updatedAt'
+>;
