@@ -1,6 +1,7 @@
 import { Prop } from "@typegoose/typegoose";
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Types } from "mongoose";
+import { Role } from "../../common/role";
 
 export class User extends TimeStamps implements Base {
   _id: Types.ObjectId;
@@ -23,4 +24,7 @@ export class User extends TimeStamps implements Base {
 
   @Prop()
   password: string;
+
+  @Prop({ enum: Role })
+  role: Role;
 }

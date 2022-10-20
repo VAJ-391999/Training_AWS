@@ -1,3 +1,4 @@
+import { Role } from "../../common/role";
 import { CreateUserRequestDTO } from "../validator/createUserRequest.dto";
 
 export class UserRepository {
@@ -9,7 +10,7 @@ export class UserRepository {
 
   createUser = (user: CreateUserRequestDTO) => {
     console.log("Create user Repo");
-    return this.userModel.create(user);
+    return this.userModel.create({ ...user, role: Role.USER });
   };
 
   getByEmail = (email: string) => {
