@@ -28,3 +28,61 @@ mat-form-field {
 .login-form input {
     width: 100%;
 }
+
+.btn-login {
+    width: 100%;
+    background-color: #1e2b58;
+    height: 40px;
+    font-size: 20px;
+    color: #A2A2A1FF;
+}
+
+.btn-login:hover {
+    color: #1e2b58;
+    background-color: #A2A2A1FF;
+}
+
+.forget-password-link {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.forget-password-link a {
+    text-decoration: none;
+    color: #1e2b58;
+    font-size: 15px;
+}
+
+.forget-password-link a:hover, .registration-link p a:hover{
+    color: #fff;
+    transition: 0.3s;
+}
+
+.registration-link {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 10px 0;
+    justify-content: right;
+    color: #1e2b58;
+}
+
+.registration-link p a {
+    text-decoration: none;
+    color: #1e2b58;
+    font-size: 15px;
+}
+
+.btn-home {
+    height: 60px;
+    width: 100%;
+    font-size: 25px;
+    margin: 10px;
+    transition: 0.3s;
+    background-color: #1e2b58;
+    color: #A2A2A1FF;
+}
+
+.login-form form {
+    padding-top: 30px;
+}

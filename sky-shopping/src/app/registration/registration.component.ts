@@ -103,4 +103,8 @@ export class RegistrationComponent implements OnInit {
         }
       });
   };
+
+  onHome = () => {
+    this.router.navigate(['']);
+  };
 }

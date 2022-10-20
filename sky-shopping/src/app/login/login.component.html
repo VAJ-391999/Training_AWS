@@ -4,6 +4,9 @@
             <div class="login-title">
                 <p>Sky</p><br>
                 <p>Shopping</p>
+                <button class="btn-home" type="button" mat-button (click)="onHome()">
+                    Home
+                  </button>
             </div>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -37,9 +40,17 @@
                             character
                         </mat-error>
                     </mat-form-field>
+
+                    <div class="forget-password-link">
+                        <a href="">Forget Password</a>
+                    </div>
         
-                    <button class="btn-register" mat-raised-button color="primary"
-                        [disabled]="!loginForm.valid">Submit</button>
+                    <button class="btn-login" mat-raised-button color="primary"
+                        [disabled]="!loginForm.valid">Login</button>
+
+                    <div class="registration-link">
+                        <p>Do not have account? <a href="/registration">Register</a></p>
+                    </div>
                 </form>
             </div>
         </mat-grid-tile>

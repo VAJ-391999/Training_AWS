@@ -21,10 +21,37 @@
     padding: 20px;
 }
 
+.registration-form form {
+    padding-top: 30px;
+}
+
 mat-form-field {
     width: 100%;
 }
 
 .registration-form input {
     width: 100%;
+}
+
+.btn-home {
+    height: 60px;
+    width: 100%;
+    font-size: 25px;
+    margin: 10px;
+    transition: 0.3s;
+    background-color: #1e2b58;
+    color: #A2A2A1FF;
+}
+
+.btn-register {
+    width: 100%;
+    background-color: #1e2b58;
+    height: 40px;
+    font-size: 20px;
+    color: #A2A2A1FF;
+}
+
+.btn-register:hover {
+    color: #1e2b58;
+    background-color: #A2A2A1FF;
 }

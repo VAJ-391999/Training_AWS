@@ -4,6 +4,9 @@
             <div class="registration-title">
                 <p>Sky</p><br>
                 <p>Shopping</p>
+                <button class="btn-home" type="button" mat-button (click)="onHome()">
+                    Home
+                  </button>
             </div>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -128,7 +131,7 @@
                     </mat-form-field>
         
                     <button class="btn-register" mat-raised-button color="primary"
-                        [disabled]="!registrationForm.valid">Submit</button>
+                        [disabled]="!registrationForm.valid">Register</button>
                 </form>
             </div>
         </mat-grid-tile>
