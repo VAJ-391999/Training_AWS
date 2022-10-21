@@ -5,3 +5,8 @@
 */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* [button^="btn-"] {
+    background-color: #1e2b58;
+    color: #A2A2A1FF;
+} */

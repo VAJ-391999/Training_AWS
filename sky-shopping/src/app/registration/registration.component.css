@@ -49,6 +49,7 @@ mat-form-field {
     height: 40px;
     font-size: 20px;
     color: #A2A2A1FF;
+    font-weight: bold;
 }
 
 .btn-register:hover {

@@ -1,14 +1,15 @@
 <nav>
-    <div class="header">
-        <ul class="header-list">
-            <li class="header-list-item"  routerLinkActive="active">
-                <a type="button" routerLink="/products">
-                Products
-                </a>
-            </li>
-            <li class="header-list-item">
-                <button class="btn-logout" (click)="onLogout()">Logout</button>
-            </li>
-        </ul>
-    </div>
+  <div class="header">
+    <ul class="header-list">
+      <li class="header-list-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="">Home</a>
+      </li>
+      <li class="header-list-item" routerLinkActive="active">
+        <a routerLink="{{ role }}/products"> Products </a>
+      </li>
+      <li class="header-list-item">
+        <button class="btn-logout" (click)="onLogout()">Logout</button>
+      </li>
+    </ul>
+  </div>
 </nav>

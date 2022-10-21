@@ -1,16 +1,19 @@
 <app-loader *ngIf="loader | async"></app-loader>
 <div class="product-list" *ngIf="!(loader | async)">
-    <div class="product-list-title">
-        <p>Product List</p>
-        <button class="btn-add-product" type="button" mat-button (click)="onAddProduct()">
-            Add Product
-          </button>
-    </div>
-    <div class="products" *ngIf="products.length > 0">
-        <app-product *ngFor="let prod of products" [product]="prod"></app-product>
-    </div>
-    <div class="no-products" *ngIf="products.length === 0">
-        <p>No Products are there</p>
-    </div>
+  <div class="product-list-title">
+    <p>Product List</p>
+    <button class="btn-blue" type="button" mat-button (click)="onAddProduct()">
+      Add Product
+    </button>
+  </div>
+  <div class="products" *ngIf="products.length > 0">
+    <mat-grid-list cols="3" rowHeight="500px" gutterSize="15px">
+      <mat-grid-tile *ngFor="let prod of products">
+        <app-product [product]="prod"></app-product>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div class="no-products" *ngIf="products.length === 0">
+    <p>No Products are there</p>
+  </div>
 </div>
-

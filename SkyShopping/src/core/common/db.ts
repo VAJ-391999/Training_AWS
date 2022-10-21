@@ -1,7 +1,7 @@
 import { getModelForClass } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import { config } from "../config/config";
-import { Product } from "../products/model/product.";
+import { Product } from "../products/model/product";
 import { User } from "../user/model/user";
 import { MONGOOSE_CONNECTION_STATE } from "./dbConnectionState";
 

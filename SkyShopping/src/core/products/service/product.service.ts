@@ -1,5 +1,4 @@
 import { MongoDb } from "../../common/db";
-import { HttpError } from "../../common/httpError";
 import { ProductRepository } from "../repository/product.repository";
 import { CreateProductRequestDTO } from "../validators/createProductRequest.dto";
 

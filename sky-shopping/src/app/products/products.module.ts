@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { ProductComponent } from './product/product.component';
-import { ProductRoutingModule } from './products-routing.module';
-import { ProductsComponent } from './products.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { LoaderComponent } from '../loader/loader.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,8 +18,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatButtonModule,
     CommonModule,
     MatGridListModule,
+    MatCardModule,
+    SharedModule,
   ],
   declarations: [ProductComponent, EditProductComponent],
-  exports: [ProductComponent, EditProductComponent],
+  exports: [
+    ProductComponent,
+    EditProductComponent,
+    MatCardModule,
+    MatGridListModule,
+  ],
 })
 export class ProductModule {}

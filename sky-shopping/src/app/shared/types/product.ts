@@ -4,6 +4,7 @@ export interface Product {
   name: string;
   unitPrice: number;
   imageUrl: string;
+  description: string;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,0 +1,9 @@
+.example-card {
+    max-width: 400px;
+    min-width: auto;
+    min-height: 350px;
+  }
+  
+  .example-header-image {
+    background-size: cover;
+  }

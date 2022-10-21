@@ -25,6 +25,7 @@ export class ProductService {
   };
 
   createProduct = (product: CreateProduct) => {
+    console.log('Create new product');
     return this.httpClient
       .post<Response<Product>>(`${environment.apiBaseUrl}/product/new`, product)
       .pipe(

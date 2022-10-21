@@ -9,7 +9,7 @@ import { ProductService } from './products.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
+  styleUrls: ['./products.component.css', '../shared/common/common-style.css'],
 })
 export class ProductsComponent implements OnInit {
   loader!: Observable<boolean>;
@@ -26,11 +26,12 @@ export class ProductsComponent implements OnInit {
     this.store.dispatch({ type: LoaderAction.START });
     this.productService.getProducts().subscribe((data) => {
       console.log('product list', data);
+      this.products = data.data;
       this.store.dispatch({ type: LoaderAction.STOP });
     });
   }
 
   onAddProduct = () => {
-    this.router.navigate(['/user/products/add']);
+    this.router.navigate(['/admin/products/add']);
   };
 }

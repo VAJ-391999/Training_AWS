@@ -1,0 +1,21 @@
+mat-form-field {
+    width: 100%;
+}
+
+.product {
+    padding: 60px;
+}
+
+.product-title p {
+    font-size: 40px;
+    color: #1e2b58;
+}
+
+.product-form {
+    padding: 20px 0;
+}
+
+.btn-add-product {
+    background-color: #1e2b58;
+    color: #A2A2A1FF;
+}

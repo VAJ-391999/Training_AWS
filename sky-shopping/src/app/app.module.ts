@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRouter } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { DirectiveModule } from './shared/directives/directive.module';
 import { UserService } from './shared/services/user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,17 +17,23 @@ import { RoleGuardService } from './shared/guards/role.guard';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './loader/loader.reducer';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [
-    AppRouter,
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     DirectiveModule,
     HttpClientModule,
     SharedModule,
     StoreModule.forRoot({ loader: reducer }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
   ],
   providers: [
     UserService,
@@ -36,6 +42,7 @@ import { reducer } from './loader/loader.reducer';
     AuthGuardService,
     AuthOnLoadGuardService,
     RoleGuardService,
+    AngularFirestore,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

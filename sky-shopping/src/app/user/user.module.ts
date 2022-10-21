@@ -9,6 +9,6 @@ import { ProductModule } from '../products/products.module';
 
 @NgModule({
   declarations: [UserComponent, ProductsComponent],
-  imports: [CommonModule, UserRoutingModule, SharedModule, ProductModule],
+  imports: [UserRoutingModule, SharedModule, ProductModule],
 })
 export class UserModule {}

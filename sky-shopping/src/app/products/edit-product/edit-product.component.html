@@ -1,47 +1,88 @@
-<div class="product">
-    <mat-grid-list cols="2">
-        <mat-grid-tile>
-            <div class="product-title">
-                <p>Add Product</p>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="product-form">
-                <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm)">
+<app-loader *ngIf="loader | async"></app-loader>
+<div class="product" *ngIf="!(loader | async)">
+  <div class="product-title">
+    <p>Add Product</p>
+  </div>
+  <div class="product-form">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm)">
+      <mat-form-field class="name-field" appearance="fill">
+        <mat-label>ProductName</mat-label>
+        <input
+          type="text"
+          name="productName"
+          id="productName"
+          matInput
+          formControlName="name"
+          placeholder="Stars"
+        />
+        <mat-error *ngIf="productForm.get('name')!.hasError('required')">
+          Product Name is required filed
+        </mat-error>
+        <mat-error *ngIf="productForm.get('name')!.hasError('minlength')">
+          Product Name must at least 2 character long
+        </mat-error>
+        <mat-error *ngIf="productForm.get('name')!.hasError('maxlength')">
+          Product Name must not have more than 10 characters
+        </mat-error>
+      </mat-form-field>
 
-                    <mat-form-field class="name-field" appearance="fill">
-                        <mat-label>ProductName</mat-label>
-                        <input type="text" name="productName" id="productName" matInput formControlName="name" placeholder="Stars">
-                        <mat-error *ngIf="productForm.get('name')!.hasError('required')">
-                            Product Name is required filed
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('name')!.hasError('minlength')">
-                            Product Name must at least 2 character long
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('name')!.hasError('maxlength')">
-                            Product Name must not have more than 10 characters
-                        </mat-error>
-                    </mat-form-field>
+      <mat-form-field class="price-field" appearance="fill">
+        <mat-label>Price</mat-label>
+        <input
+          type="text"
+          name="price"
+          id="price"
+          matInput
+          formControlName="unitPrice"
+          placeholder="10"
+        />
+        <mat-error *ngIf="productForm.get('unitPrice')!.hasError('required')">
+          Price is required filed
+        </mat-error>
+        <mat-error *ngIf="productForm.get('unitPrice')!.hasError('min')">
+          Price must be greater than 0
+        </mat-error>
+        <mat-error *ngIf="productForm.get('unitPrice')!.hasError('max')">
+          Price must be less than 10000
+        </mat-error>
+      </mat-form-field>
 
-                    <mat-form-field class="price-field" appearance="fill">
-                        <mat-label>Price</mat-label>
-                        <input type="text" name="price" id="price" matInput formControlName="unitPrice" placeholder="10">
-                        <mat-error *ngIf="productForm.get('unitPrice')!.hasError('required')">
-                            Price is required filed
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('unitPrice')!.hasError('min')">
-                            Price must be greater than 0
-                        </mat-error>
-                        <mat-error *ngIf="productForm.get('unitPrice')!.hasError('max')">
-                            Price must be less than 10000
-                        </mat-error>
-                    </mat-form-field>
-        
-                    <button class="btn-add-product" mat-raised-button color="primary"
-                        [disabled]="!productForm.valid">Add Product</button>
-                </form>
-            </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+      <mat-form-field class="description-field" appearance="fill">
+        <mat-label>Description</mat-label>
+        <input
+          type="text"
+          name="description"
+          id="description"
+          matInput
+          formControlName="description"
+          placeholder="Description"
+        />
+        <mat-error *ngIf="productForm.get('description')!.hasError('required')">
+          Description is required filed
+        </mat-error>
+        <mat-error *ngIf="productForm.get('description')!.hasError('min')">
+          Description should be at least 3 character long
+        </mat-error>
+        <mat-error *ngIf="productForm.get('description')!.hasError('max')">
+          Description should be less than 10000
+        </mat-error>
+      </mat-form-field>
+
+      <input
+        (change)="onFileSelected($event)"
+        #fileInput
+        type="file"
+        id="file"
+      /><br />
+
+      <button
+        class="btn-add-product"
+        mat-raised-button
+        color="primary"
+        [disabled]="!productForm.valid"
+      >
+        Add Product
+      </button>
+    </form>
+  </div>
 </div>
-

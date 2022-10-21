@@ -1,0 +1,13 @@
+.product-list {
+    padding: 60px;
+}
+
+ .product-list-title {
+    display: flex;
+    justify-content: space-between;
+ }
+
+.product-list-title p {
+    font-size: 40px;
+    color: #1e2b58;
+}

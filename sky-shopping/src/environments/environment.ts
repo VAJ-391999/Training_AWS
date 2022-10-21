@@ -5,6 +5,14 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:3000/dev',
+  firebaseConfig: {
+    apiKey: 'AIzaSyCmkl0Xv5WfF0oHVX_jyhv2rvOuUkPwzC8',
+    authDomain: 'sky-shopping.firebaseapp.com',
+    projectId: 'sky-shopping',
+    storageBucket: 'sky-shopping.appspot.com',
+    messagingSenderId: '446432424757',
+    appId: '1:446432424757:web:8ef756566b0c2c5a22527c',
+  },
 };
 
 /*

@@ -11,5 +11,9 @@ export class Product extends TimeStamps implements Base {
   @Prop()
   unitPrice: string;
 
+  @Prop()
   imageUrl: string;
+
+  @Prop()
+  description: string;
 }

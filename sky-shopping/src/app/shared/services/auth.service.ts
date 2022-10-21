@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, map, Subject, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Login } from '../types/login';
@@ -8,9 +9,8 @@ import { Response } from '../types/response';
 
 @Injectable()
 export class AuthService {
-  // userValue = new Subject<string | null>();
-  // isAuthenticated = new Subject<boolean>();
   role = new BehaviorSubject<string>('');
+  isAuthenticated = new BehaviorSubject(false);
   constructor(
     private readonly httpClient: HttpClient,
     private readonly router: Router
@@ -24,8 +24,11 @@ export class AuthService {
         map((res) => {
           if (res.data !== null) {
             localStorage.setItem('userValue', res.data);
-            // this.isAuthenticated.next(true);
-            // this.userValue.next(res.data);
+            const tokenPayload: any = jwtDecode(res.data);
+            if (tokenPayload !== null) {
+              this.isAuthenticated.next(true);
+              this.role.next(tokenPayload.role);
+            }
           }
           return res;
         })
@@ -34,7 +37,19 @@ export class AuthService {
 
   isLoggedIn = () => {
     console.log('isLoggedIn', localStorage.getItem('userValue'));
-    return this.getToken() !== null ? true : false;
+    const token = this.getToken();
+    if (!token) {
+      this.isAuthenticated.next(false);
+      this.role.next('');
+      return false;
+    } else {
+      const tokenPayload: any = jwtDecode(token);
+      if (tokenPayload !== null) {
+        this.isAuthenticated.next(true);
+        this.role.next(tokenPayload.role);
+      }
+      return true;
+    }
   };
 
   getToken = (): string | null => {
@@ -43,7 +58,8 @@ export class AuthService {
 
   userLogout = () => {
     // this.userValue.next(null);
-    // this.isAuthenticated.next(false);
+    this.isAuthenticated.next(false);
+    this.role.next('');
     localStorage.removeItem('userValue');
     this.router.navigate(['/login']);
   };
