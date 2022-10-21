@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { CreateProductRequestDTO } from "../validators/createProductRequest.dto";
 
 export class ProductRepository {
@@ -13,5 +14,9 @@ export class ProductRepository {
 
   createProduct = (product: CreateProductRequestDTO) => {
     return this.productModel.create(product);
+  };
+
+  getProductDetail = (id: mongoose.Types.ObjectId) => {
+    return this.productModel.findOne({ _id: id });
   };
 }

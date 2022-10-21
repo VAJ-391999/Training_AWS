@@ -9,6 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { LoaderComponent } from '../loader/loader.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { SharedModule } from '../shared/shared.module';
     MatCardModule,
     SharedModule,
   ],
-  declarations: [ProductComponent, EditProductComponent],
+  declarations: [ProductComponent, EditProductComponent, ProductDetailComponent],
   exports: [
     ProductComponent,
     EditProductComponent,

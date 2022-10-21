@@ -36,4 +36,16 @@ export class ProductService {
         })
       );
   };
+
+  getProductDetail = (id: string) => {
+    return this.httpClient
+      .get<Response<Product>>(`${environment.apiBaseUrl}/products/${id}`)
+      .pipe(
+        take(1),
+        map((res) => {
+          console.log('res', res);
+          return res;
+        })
+      );
+  };
 }

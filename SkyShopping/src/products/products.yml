@@ -12,3 +12,10 @@ createProduct:
         path: /product/new
         method: POST
         authorizer: ${self:custom.authorizer.users}
+getProductDetail:
+  handler: src/products/functions/getProductDetail.handler
+  events:
+    - http:
+        path: /products/{productId}
+        method: GET
+        authorizer: ${self:custom.authorizer.users}

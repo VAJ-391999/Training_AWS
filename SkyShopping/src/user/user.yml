@@ -1,5 +1,5 @@
 hello:
-  handler: src/user/functions/handler.hello
+  handler: src/user/functions/handler.handler
   events:
     - http:
         path: /hello

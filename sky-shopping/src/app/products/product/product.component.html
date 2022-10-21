@@ -9,7 +9,7 @@
       {{ product.description }}
     </p>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="role === 'user'">
     <button mat-button>Add To Cart</button>
   </mat-card-actions>
 </mat-card>

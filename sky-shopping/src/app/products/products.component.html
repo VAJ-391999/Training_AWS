@@ -9,7 +9,10 @@
   <div class="products" *ngIf="products.length > 0">
     <mat-grid-list cols="3" rowHeight="500px" gutterSize="15px">
       <mat-grid-tile *ngFor="let prod of products">
-        <app-product [product]="prod"></app-product>
+        <app-product
+          [product]="prod"
+          (click)="onProductSelect(prod._id)"
+        ></app-product>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

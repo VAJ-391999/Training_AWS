@@ -2,6 +2,7 @@ import { APIGatewayEvent, Callback, Context } from "aws-lambda";
 import { MongoDb } from "../../core/common/db";
 import { HttpError } from "../../core/common/httpError";
 import { responseHandler } from "../../core/common/responseHandler";
+import { validateObjectId } from "../../core/common/validateObjectId";
 import { ProductService } from "../../core/products/service/product.service";
 
 export const handler = async (
@@ -11,8 +12,11 @@ export const handler = async (
 ) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  console.log("Get Product List");
+  console.log("Get Product detail");
 
+  const id: string = event!.pathParameters!.productId || "";
+
+  const productId = validateObjectId(id);
   const db = new MongoDb();
 
   if (!db.isConnected()) {
@@ -22,11 +26,11 @@ export const handler = async (
   const productService = new ProductService(db);
   let response;
   try {
-    const productList = await productService.getProductList();
+    const productDetail = await productService.getProductDetail(productId);
     response = responseHandler(false, {
       statusCode: 200,
-      message: "Get product List",
-      data: productList,
+      message: "Get product details",
+      data: productDetail,
     });
   } catch (error) {
     if (error instanceof HttpError) {
@@ -41,4 +45,6 @@ export const handler = async (
   }
 
   callback(null, response);
+
+  callback(null, "Get Product detail");
 };
