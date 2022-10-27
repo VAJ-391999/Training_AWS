@@ -34,7 +34,7 @@ export class RoleGuardService implements CanActivate {
     const tokenPayload: any = jwtDecode(token);
 
     if (tokenPayload.role !== expectedRole) {
-      this.authService.role.next(tokenPayload.role);
+      this.authService.user.next(tokenPayload);
       if (tokenPayload.role === 'admin') {
         this.router.navigate(['/admin']);
         return false;

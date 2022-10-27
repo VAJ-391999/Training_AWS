@@ -1,0 +1,14 @@
+addToCart:
+  handler: src/cart/functions/addToCart.handler
+  events:
+    - http:
+        path: /cart/add
+        method: POST
+        authorizer: ${self:custom.authorizer.users}
+getCart:
+  handler: src/cart/functions/getCart.handler
+  events:
+    - http:
+        path: /cart/detail
+        method: POST
+        authorizer: ${self:custom.authorizer.users}

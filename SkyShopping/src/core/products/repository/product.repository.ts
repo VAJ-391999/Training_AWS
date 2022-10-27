@@ -19,4 +19,8 @@ export class ProductRepository {
   getProductDetail = (id: mongoose.Types.ObjectId) => {
     return this.productModel.findOne({ _id: id });
   };
+
+  getBulkProducts = (ids: mongoose.Types.ObjectId[]) => {
+    return this.productModel.find({ $in: [...ids] });
+  };
 }

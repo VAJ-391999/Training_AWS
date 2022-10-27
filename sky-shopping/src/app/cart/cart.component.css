@@ -1,0 +1,51 @@
+.cart {
+    padding: 60px 50px 30px 50px;
+}
+
+.cart-title p {
+    font-size: 40px;
+    color: #1e2b58;
+    padding-bottom: 20px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-section {
+    min-width: 150px;
+    text-align: center;
+}
+
+.action-section p, .price-section p{
+    padding: 0 20px;
+    font-size: 20px;
+    color: #1e2b58;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+mat-card {
+    margin-bottom: 20px;
+}
+
+.total-price-section {
+    display: flex;
+    justify-content: space-around;
+    color: #1e2b58;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.total-price-section p {
+    line-height: 2;
+}

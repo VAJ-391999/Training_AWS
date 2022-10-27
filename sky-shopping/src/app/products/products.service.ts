@@ -48,4 +48,16 @@ export class ProductService {
         })
       );
   };
+
+  getBulkProducts = (productIds: string[]) => {
+    return this.httpClient
+      .post<Response<Product[]>>(
+        `${environment.apiBaseUrl}/products/bulk`,
+        productIds
+      )
+      .pipe(
+        take(1),
+        map((res) => res)
+      );
+  };
 }

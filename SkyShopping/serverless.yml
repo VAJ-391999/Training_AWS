@@ -12,6 +12,7 @@ functions:
   - ${file(./src/user/user.yml)}
   - ${file(./src/products/products.yml)}
   - ${file(./src/auth/auth.yml)}
+  - ${file(./src/cart/cart.yml)}
 
 custom:
   stage: ${opt:stage, self:provider.stage}

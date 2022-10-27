@@ -21,6 +21,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
+import { CartService } from './cart/cart.service';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -48,6 +49,7 @@ import { environment } from 'src/environments/environment';
       useClass: TokenInterceptorService,
       multi: true,
     },
+    CartService,
   ],
   bootstrap: [AppComponent],
 })

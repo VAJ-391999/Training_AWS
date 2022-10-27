@@ -19,9 +19,8 @@ export class ProductService {
     return await this.productRepository.getProductList();
   };
 
-  getProductDetail = async (id: mongoose.Types.ObjectId) => {
-    const product: Product = await this.productRepository.getProductDetail(id);
-
+  getProductDetail = async (id: mongoose.Types.ObjectId): Promise<Product> => {
+    let product: Product = await this.productRepository.getProductDetail(id);
     if (!product) {
       throw new HttpError({
         statusCode: 404,
@@ -29,6 +28,7 @@ export class ProductService {
         data: null,
       });
     }
+
     return product;
   };
 }

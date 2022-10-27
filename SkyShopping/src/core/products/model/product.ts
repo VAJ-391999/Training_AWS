@@ -9,7 +9,7 @@ export class Product extends TimeStamps implements Base {
   name: string;
 
   @Prop()
-  unitPrice: string;
+  unitPrice: number;
 
   @Prop()
   imageUrl: string;

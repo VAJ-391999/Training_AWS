@@ -2,10 +2,14 @@
   <div class="header">
     <ul class="header-list">
       <li class="header-list-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="">Home</a>
-      </li>
-      <li class="header-list-item" routerLinkActive="active">
         <a routerLink="{{ role }}/products"> Products </a>
+      </li>
+      <li
+        class="header-list-item"
+        routerLinkActive="active"
+        *ngIf="role === 'user'"
+      >
+        <a routerLink="{{ role }}/cart"> My Cart </a>
       </li>
       <li class="header-list-item">
         <button class="btn-logout" (click)="onLogout()">Logout</button>

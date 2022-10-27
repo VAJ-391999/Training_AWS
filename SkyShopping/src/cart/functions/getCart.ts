@@ -1,9 +1,10 @@
 import { APIGatewayEvent, Callback, Context } from "aws-lambda";
+import { CartService } from "../../core/cart/service/cart.service";
+import { GetCartRequestDTO } from "../../core/cart/validators/getCartRequest.dto";
 import { MongoDb } from "../../core/common/db";
 import { HttpError } from "../../core/common/httpError";
 import { responseHandler } from "../../core/common/responseHandler";
 import { validateObjectId } from "../../core/common/validateObjectId";
-import { ProductService } from "../../core/products/service/product.service";
 
 export const handler = async (
   event: APIGatewayEvent,
@@ -12,25 +13,27 @@ export const handler = async (
 ) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  console.log("Get Product detail");
+  console.log("Get Cart detail");
 
-  const id: string = event!.pathParameters!.productId || "";
-
-  const productId = validateObjectId(id);
   const db = new MongoDb();
 
-  if (!db.isConnected()) {
-    await db.getConnection();
-  }
-
-  const productService = new ProductService(db);
+  const addToCartReq = JSON.parse(event!.body!) as GetCartRequestDTO;
   let response;
   try {
-    const productDetail = await productService.getProductDetail(productId);
+    const userId = validateObjectId(addToCartReq.userId);
+
+    if (!db.isConnected()) {
+      await db.getConnection();
+    }
+
+    const cartService: CartService = new CartService(db);
+
+    const createdCart = await cartService.getCartDetail(userId);
+
     response = responseHandler(false, {
       statusCode: 200,
-      message: "Get product details",
-      data: productDetail,
+      message: "Get cart details",
+      data: createdCart,
     });
   } catch (error) {
     if (error instanceof HttpError) {

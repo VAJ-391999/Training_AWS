@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   error: boolean = false;
   message: string = '';
-  roleSubscription!: Subscription;
+  userSubscription!: Subscription;
   role!: string;
 
   constructor(
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     console.log('Login unsubscribe');
-    // this.roleSubscription.unsubscribe();
+    // this.userSubscription.unsubscribe();
   }
 
   ngOnInit(): void {

@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, map, Subject, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TokePayload } from '../types/auth';
 import { Login } from '../types/login';
 import { Response } from '../types/response';
 
 @Injectable()
 export class AuthService {
-  role = new BehaviorSubject<string>('');
+  user = new BehaviorSubject<TokePayload | null>(null);
   isAuthenticated = new BehaviorSubject(false);
   constructor(
     private readonly httpClient: HttpClient,
@@ -27,7 +28,7 @@ export class AuthService {
             const tokenPayload: any = jwtDecode(res.data);
             if (tokenPayload !== null) {
               this.isAuthenticated.next(true);
-              this.role.next(tokenPayload.role);
+              this.user.next(tokenPayload);
             }
           }
           return res;
@@ -40,13 +41,13 @@ export class AuthService {
     const token = this.getToken();
     if (!token) {
       this.isAuthenticated.next(false);
-      this.role.next('');
+      this.user.next(null);
       return false;
     } else {
       const tokenPayload: any = jwtDecode(token);
       if (tokenPayload !== null) {
         this.isAuthenticated.next(true);
-        this.role.next(tokenPayload.role);
+        this.user.next(tokenPayload);
       }
       return true;
     }
@@ -59,7 +60,7 @@ export class AuthService {
   userLogout = () => {
     // this.userValue.next(null);
     this.isAuthenticated.next(false);
-    this.role.next('');
+    this.user.next(null);
     localStorage.removeItem('userValue');
     this.router.navigate(['/login']);
   };

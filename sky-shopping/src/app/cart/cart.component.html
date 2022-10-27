@@ -1,0 +1,53 @@
+<app-loader *ngIf="loader | async"></app-loader>
+<div class="cart" *ngIf="!(loader | async)">
+  <div class="cart-title">
+    <p>My Cart</p>
+  </div>
+  <div class="cart-detail">
+    <mat-card class="example-card" *ngFor="let item of cart.items">
+      <mat-card-title-group>
+        <img mat-card-md-image [src]="item.product.imageUrl" />
+        <mat-card-title>{{ item.product.name }}</mat-card-title>
+        <mat-card-subtitle>{{ item.product.unitPrice }}</mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-actions class="actions">
+        <div class="action-section">
+          <button
+            mat-button
+            class="btn-blue"
+            (click)="changeCartItem('increase', item.product._id)"
+          >
+            +
+          </button>
+          <p>{{ item.quantity }}</p>
+          <button
+            mat-button
+            class="btn-blue"
+            (click)="changeCartItem('decrease', item.product._id)"
+          >
+            -
+          </button>
+        </div>
+        <div class="price-section">
+          <p>{{ item.quantity * item.product.unitPrice }}</p>
+        </div>
+        <div class="remove-section">
+          <button
+            mat-button
+            class="btn-blue"
+            (click)="changeCartItem('remove', item.product._id)"
+          >
+            Remove
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+    <div class="total-price-section">
+      <p>Total Price: {{ cart.totalPrice }}</p>
+      <button mat-button class="btn-blue">Checkout</button>
+    </div>
+    <div class="no-products" *ngIf="cart.items.length === 0">
+      <p>No Products are there</p>
+    </div>
+  </div>
+</div>

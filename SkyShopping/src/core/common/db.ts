@@ -1,5 +1,6 @@
 import { getModelForClass } from "@typegoose/typegoose";
 import mongoose from "mongoose";
+import { Cart } from "../cart/model/cart";
 import { config } from "../config/config";
 import { Product } from "../products/model/product";
 import { User } from "../user/model/user";
@@ -9,6 +10,7 @@ export class MongoDb {
   private connection: any;
   userModel: any;
   productModel: any;
+  cartModel: any;
 
   constructor() {}
 
@@ -40,5 +42,6 @@ export class MongoDb {
   private populate = () => {
     this.userModel = getModelForClass(User);
     this.productModel = getModelForClass(Product);
+    this.cartModel = getModelForClass(Cart);
   };
 }

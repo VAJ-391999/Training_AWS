@@ -21,7 +21,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   product!: Product;
   productSubscription!: Subscription;
   productId!: string;
-  roleSubscription!: Subscription;
+  userSubscription!: Subscription;
   role!: string;
 
   constructor(
@@ -32,14 +32,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
-    this.roleSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
     this.loader = this.store.pipe(select((state) => state.loader.isOn));
-    this.roleSubscription = this.authService.role.subscribe({
+    this.userSubscription = this.authService.user.subscribe({
       next: (res) => {
-        this.role = res;
+        this.role = res ? res.role : '';
       },
     });
     this.onInit();

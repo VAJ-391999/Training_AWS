@@ -1,5 +1,10 @@
 <mat-card class="example-card">
-  <img mat-card-image [src]="product.imageUrl" alt="product.name" />
+  <img
+    mat-card-image
+    [src]="product.imageUrl"
+    alt="product.name"
+    (click)="onProductSelect(product._id)"
+  />
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>
     <mat-card-subtitle>{{ product.unitPrice }} Rs.</mat-card-subtitle>
@@ -10,6 +15,8 @@
     </p>
   </mat-card-content>
   <mat-card-actions *ngIf="role === 'user'">
-    <button mat-button>Add To Cart</button>
+    <button mat-button class="btn-blue" (click)="addToCart(product._id)">
+      Add To Cart
+    </button>
   </mat-card-actions>
 </mat-card>

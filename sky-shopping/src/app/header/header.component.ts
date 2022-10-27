@@ -18,19 +18,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout = new EventEmitter();
 
   role!: string;
-  roleSubscription!: Subscription;
+  userSubscription!: Subscription;
   isLoggedIn!: boolean;
 
   constructor(private readonly authService: AuthService) {}
   ngOnDestroy(): void {
-    this.roleSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.roleSubscription = this.authService.role.subscribe({
+    this.userSubscription = this.authService.user.subscribe({
       next: (response) => {
-        console.log('role', response);
-        this.role = response;
+        console.log('user', response);
+        this.role = response ? response.role : '';
       },
     });
   }
