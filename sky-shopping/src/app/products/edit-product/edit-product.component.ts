@@ -89,14 +89,18 @@ export class EditProductComponent implements OnInit {
   onFileSelected = async (event: any) => {
     console.log('File changes');
     var n = Date.now();
-    this.selectedFile = event.target.files[0];
+    try {
+      this.selectedFile = event.target.files[0];
 
-    const filePath = `${this.basePath}/${n}-${this.selectedFile.name}`;
-    this.task = this.storage.upload(filePath, this.selectedFile);
+      const filePath = `${this.basePath}/${n}-${this.selectedFile.name}`;
+      this.task = this.storage.upload(filePath, this.selectedFile);
 
-    this.progressValue = this.task.percentageChanges();
-    (await this.task).ref.getDownloadURL().then((url: any) => {
-      this.url = url;
-    });
+      this.progressValue = this.task.percentageChanges();
+      (await this.task).ref.getDownloadURL().then((url: any) => {
+        this.url = url;
+      });
+    } catch (error) {
+      throw new Error('Not able to upload image. Try after some time');
+    }
   };
 }

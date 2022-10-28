@@ -2,6 +2,7 @@ import { getModelForClass } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import { Cart } from "../cart/model/cart";
 import { config } from "../config/config";
+import { Order } from "../order/model/order.model";
 import { Product } from "../products/model/product";
 import { User } from "../user/model/user";
 import { MONGOOSE_CONNECTION_STATE } from "./dbConnectionState";
@@ -11,6 +12,7 @@ export class MongoDb {
   userModel: any;
   productModel: any;
   cartModel: any;
+  orderModel: any;
 
   constructor() {}
 
@@ -43,5 +45,6 @@ export class MongoDb {
     this.userModel = getModelForClass(User);
     this.productModel = getModelForClass(Product);
     this.cartModel = getModelForClass(Cart);
+    this.orderModel = getModelForClass(Order);
   };
 }

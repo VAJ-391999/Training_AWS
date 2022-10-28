@@ -22,6 +22,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
 import { CartService } from './cart/cart.service';
+import { CheckoutService } from './checkout/checkout.service';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -50,6 +51,7 @@ import { CartService } from './cart/cart.service';
       multi: true,
     },
     CartService,
+    CheckoutService,
   ],
   bootstrap: [AppComponent],
 })

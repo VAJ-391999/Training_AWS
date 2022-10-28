@@ -44,7 +44,26 @@
     </mat-card>
     <div class="total-price-section">
       <p>Total Price: {{ cart.totalPrice }}</p>
-      <button mat-button class="btn-blue">Checkout</button>
+      <button
+        class="btn-blue"
+        mat-raised-button
+        color="primary"
+        (click)="checkout()"
+        *ngIf="isPriceValid"
+        [disabled]="!isPriceValid"
+      >
+        Checkout
+      </button>
+      <!-- <button
+        mat-raised-button
+        color="primary"
+        mat-button
+        class="btn-blue"
+        (click)="checkout()"
+        [disabled]="!isPriceValid"
+      >
+        Checkout
+      </button> -->
     </div>
     <div class="no-products" *ngIf="cart.items.length === 0">
       <p>No Products are there</p>

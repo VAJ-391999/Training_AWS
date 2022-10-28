@@ -1,0 +1,45 @@
+.checkout {
+    padding: 60px 50px 30px 50px;
+}
+
+.checkout-title p {
+    font-size: 40px;
+    color: #1e2b58;
+    padding-bottom: 20px;
+}
+
+.checkout-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkout-detail > * {
+    flex: 1;
+  }
+
+mat-form-field {
+    width: 100%;
+}
+
+.btn-checkout {
+    background-color: #1e2b58;
+    width: 100%;
+}
+
+.order-summary-title {
+    font-size: 30px;
+    color: #1e2b58;
+    padding-bottom: 20px;
+}
+
+.order-summary {
+    margin-left: 40px;
+}
+
+mat-card-subtitle {
+    font-size: 20px;
+}
+
+.example-card {
+    margin-bottom: 10px;
+}

@@ -49,3 +49,11 @@ mat-card {
 .total-price-section p {
     line-height: 2;
 }
+
+.btn-checkout {
+    background-color: #1e2b58;
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    color: #A2A2A1FF;
+}

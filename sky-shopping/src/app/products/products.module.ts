@@ -17,12 +17,15 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     FormsModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule,
     MatGridListModule,
     MatCardModule,
     SharedModule,
   ],
-  declarations: [ProductComponent, EditProductComponent, ProductDetailComponent],
+  declarations: [
+    ProductComponent,
+    EditProductComponent,
+    ProductDetailComponent,
+  ],
   exports: [
     ProductComponent,
     EditProductComponent,

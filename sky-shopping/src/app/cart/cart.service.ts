@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, take } from 'rxjs';
+import { BehaviorSubject, map, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddToCart, Cart } from '../shared/types/cart';
 import { Response } from '../shared/types/response';
@@ -17,7 +17,12 @@ export class CartService {
       .post<Response<Cart>>(`${environment.apiBaseUrl}/cart/add`, cartDetail)
       .pipe(
         take(1),
-        map((res) => res)
+        map((res) => {
+          if (res.data !== null) {
+            this.cart.next(res.data);
+          }
+          return res;
+        })
       );
   };
 
@@ -26,7 +31,12 @@ export class CartService {
       .post<Response<Cart>>(`${environment.apiBaseUrl}/cart/detail`, { userId })
       .pipe(
         take(1),
-        map((res) => res)
+        map((res) => {
+          if (res.data !== null) {
+            this.cart.next(res.data);
+          }
+          return res;
+        })
       );
   };
 }

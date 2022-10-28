@@ -77,8 +77,12 @@ export class CartService {
             break;
           case CartAction.DECREASE:
             console.log(CartAction.DECREASE);
-            updatedItems[cartProductIndex].quantity =
-              updatedItems[cartProductIndex].quantity - 1;
+            if (updatedItems[cartProductIndex].quantity === 1) {
+              updatedItems.splice(cartProductIndex, 1);
+            } else {
+              updatedItems[cartProductIndex].quantity =
+                updatedItems[cartProductIndex].quantity - 1;
+            }
             updatedCart = {
               items: updatedItems,
               totalPrice: foundCart.totalPrice - foundProduct.unitPrice,
@@ -121,5 +125,13 @@ export class CartService {
     }
 
     return foundCart;
+  };
+
+  removeCart = async (userId: mongoose.Types.ObjectId) => {
+    await this.cartRepository.updateCart({
+      user: userId,
+      items: [],
+      totalPrice: 0,
+    });
   };
 }

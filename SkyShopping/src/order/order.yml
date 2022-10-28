@@ -1,0 +1,7 @@
+createOrder:
+  handler: src/order/functions/createOrder.handler
+  events:
+    - http:
+        path: /order/create
+        method: POST
+        authorizer: ${self:custom.authorizer.users}
