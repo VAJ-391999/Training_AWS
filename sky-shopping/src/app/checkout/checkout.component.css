@@ -1,45 +1,58 @@
 .checkout {
-    padding: 60px 50px 30px 50px;
+  padding: 60px 50px 30px 50px;
 }
 
 .checkout-title p {
-    font-size: 40px;
-    color: #1e2b58;
-    padding-bottom: 20px;
+  font-size: 40px;
+  color: #1e2b58;
+  padding-bottom: 20px;
 }
 
 .checkout-detail {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .checkout-detail > * {
-    flex: 1;
-  }
+  flex: 1;
+}
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 .btn-checkout {
-    background-color: #1e2b58;
-    width: 100%;
+  background-color: #1e2b58;
+  width: 100%;
 }
 
 .order-summary-title {
-    font-size: 30px;
-    color: #1e2b58;
-    padding-bottom: 20px;
+  font-size: 30px;
+  color: #1e2b58;
+  padding-bottom: 20px;
 }
 
 .order-summary {
-    margin-left: 40px;
+  margin-left: 40px;
 }
 
 mat-card-subtitle {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .example-card {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.order-price {
+  display: flex;
+  justify-content: space-between;
+  background-color: #a2a2a1ff;
+  padding: 10px;
+}
+
+.order-price p {
+  color: #1e2b58;
+  font-size: 20px;
+  font-weight: bold;
 }

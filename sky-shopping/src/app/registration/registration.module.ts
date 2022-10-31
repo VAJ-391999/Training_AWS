@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule,
+    SharedModule,
   ],
   declarations: [RegistrationComponent],
 })

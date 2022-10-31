@@ -1,59 +1,77 @@
+<app-loader></app-loader>
 <div class="login">
-    <mat-grid-list cols="2">
-        <mat-grid-tile>
-            <div class="login-title">
-                <p>Sky</p><br>
-                <p>Shopping</p>
-                <button class="btn-home" type="button" mat-button (click)="onHome()">
-                    Home
-                  </button>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="login-form">
-                <p *ngIf="error">{{ message }}</p>
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+  <mat-grid-list cols="2">
+    <mat-grid-tile>
+      <div class="login-title">
+        <p>Sky</p>
+        <br />
+        <p>Shopping</p>
+        <button class="btn-home" type="button" mat-button (click)="onHome()">
+          Home
+        </button>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="login-form">
+        <p *ngIf="error">{{ message }}</p>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+          <mat-form-field class="email-field" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              matInput
+              formControlName="email"
+              placeholder="tina@gmail.com"
+            />
+            <mat-error *ngIf="loginForm.get('email')!.hasError('required')">
+              Email is required filed
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')!.hasError('email')">
+              Email should be valid
+            </mat-error>
+          </mat-form-field>
 
-                    <mat-form-field class="email-field" appearance="fill">
-                        <mat-label>Email</mat-label>
-                        <input type="text" name="email" id="email" matInput formControlName="email"
-                            placeholder="tina@gmail.com">
-                        <mat-error *ngIf="loginForm.get('email')!.hasError('required')">
-                            Email is required filed
-                        </mat-error>
-                        <mat-error *ngIf="loginForm.get('email')!.hasError('email')">
-                            Email should be valid
-                        </mat-error>
-                    </mat-form-field>
-        
-                    <mat-form-field class="password-field" appearance="fill">
-                        <mat-label>Password</mat-label>
-                        <input type="password" name="password" id="password" matInput formControlName="password"
-                            placeholder="Tina#2022"
-                            compare-password-validator="confirmPassword"
-                            reverse="true">
-                        <mat-error *ngIf="loginForm.get('password')!.hasError('required')">
-                            Password is required filed
-                        </mat-error>
-                        <mat-error *ngIf="loginForm.get('password')!.hasError('pattern')">
-                            Password should contain at least 1 lower case character, 1 upper case character, 1 digit, 1 special
-                            character
-                        </mat-error>
-                    </mat-form-field>
+          <mat-form-field class="password-field" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              matInput
+              formControlName="password"
+              placeholder="Tina#2022"
+              compare-password-validator="confirmPassword"
+              reverse="true"
+            />
+            <mat-error *ngIf="loginForm.get('password')!.hasError('required')">
+              Password is required filed
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('password')!.hasError('pattern')">
+              Password should contain at least 1 lower case character, 1 upper
+              case character, 1 digit, 1 special character
+            </mat-error>
+          </mat-form-field>
 
-                    <div class="forget-password-link">
-                        <a href="">Forget Password</a>
-                    </div>
-        
-                    <button class="btn-login" mat-raised-button color="primary"
-                        [disabled]="!loginForm.valid">Login</button>
+          <div class="forget-password-link">
+            <a href="">Forget Password</a>
+          </div>
 
-                    <div class="registration-link">
-                        <p>Do not have account? <a href="/registration">Register</a></p>
-                    </div>
-                </form>
-            </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+          <button
+            class="btn-login"
+            mat-raised-button
+            color="primary"
+            [disabled]="!loginForm.valid"
+          >
+            Login
+          </button>
+
+          <div class="registration-link">
+            <p>Do not have account? <a href="/registration">Register</a></p>
+          </div>
+        </form>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
-

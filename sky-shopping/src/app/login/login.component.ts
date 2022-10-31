@@ -57,9 +57,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.error = data.error;
           this.message = data.message;
         },
-        error: (error) => {
-          window.alert(error);
-        },
         complete: () => {
           this.router.navigate(['/user']);
         },

@@ -1,5 +1,5 @@
-<app-loader *ngIf="loader | async"></app-loader>
-<div class="checkout" *ngIf="!(loader | async)">
+<app-loader></app-loader>
+<div class="checkout">
   <div class="checkout-title">
     <p>Checkout</p>
   </div>
@@ -177,9 +177,17 @@
               >Price: {{ item.product.unitPrice }} Rs.</mat-card-subtitle
             >
             <mat-card-subtitle>Qty: {{ item.quantity }}</mat-card-subtitle>
-            <img mat-card-sm-image [src]="item.product.imageUrl" />
+            <img
+              mat-card-sm-image
+              [src]="item.product.imageUrl"
+              class="skeleton"
+            />
           </mat-card-title-group>
         </mat-card>
+        <div class="order-price">
+          <p>Order Price :</p>
+          <p>{{ orderSummary.totalPrice || 0 }}</p>
+        </div>
       </div>
     </div>
   </div>

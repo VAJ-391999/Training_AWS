@@ -48,7 +48,9 @@ export class AuthService {
   };
 
   generateToken = (payload: TokenPayload): string => {
-    return JWT.sign(payload, config.tokenSecret);
+    return JWT.sign({ ...payload }, config.tokenSecret, {
+      expiresIn: "1h",
+    });
   };
 
   verifyToken = (token: string): any => {

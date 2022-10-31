@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import {
   HttpRequest,
@@ -8,17 +8,23 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { Store } from '@ngrx/store';
+import { LoaderAction } from 'src/app/loader/loader.reducer';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenInterceptorService implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private readonly store: Store<any>
+  ) {}
   token: string | null = null;
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    this.store.dispatch({ type: LoaderAction.START });
     this.token = this.authService.getToken();
     console.log('Token', this.token);
     if (this.token) {
@@ -36,7 +42,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         }
         let errorMessage;
 
-        if (err.error instanceof ErrorEvent) {
+        if (!(err.error instanceof ErrorEvent)) {
           errorMessage = `Error: ${err.error.message}`;
         } else {
           errorMessage = `Error Code: ${err.status}\nMessage: ${
@@ -45,6 +51,9 @@ export class TokenInterceptorService implements HttpInterceptor {
         }
         window.alert(errorMessage);
         return throwError(errorMessage);
+      }),
+      finalize(() => {
+        this.store.dispatch({ type: LoaderAction.STOP });
       })
     );
   }

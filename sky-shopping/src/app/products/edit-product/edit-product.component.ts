@@ -5,10 +5,8 @@ import {
   AngularFireStorage,
   AngularFireUploadTask,
 } from '@angular/fire/compat/storage';
-import { finalize, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProductService } from '../products.service';
-import { select, Store } from '@ngrx/store';
-import { LoaderAction } from 'src/app/loader/loader.reducer';
 
 @Component({
   selector: 'app-edit-product',
@@ -22,19 +20,15 @@ export class EditProductComponent implements OnInit {
   url!: string;
   basePath = '/images';
   progressValue!: Observable<number | undefined>;
-  loader!: Observable<boolean>;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
     private readonly storage: AngularFireStorage,
-    private readonly store: Store<any>,
     private readonly productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    this.loader = this.store.pipe(select((state) => state.loader.isOn));
-    this.store.dispatch({ type: LoaderAction.START });
     this.onInit();
   }
 
@@ -61,7 +55,6 @@ export class EditProductComponent implements OnInit {
         ],
       ],
     });
-    this.store.dispatch({ type: LoaderAction.STOP });
   };
 
   onSubmit = (productForm: FormGroup) => {
@@ -76,9 +69,6 @@ export class EditProductComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Response', response);
-        },
-        error: (error) => {
-          window.alert(error);
         },
         complete: () => {
           this.router.navigate(['/admin/products']);

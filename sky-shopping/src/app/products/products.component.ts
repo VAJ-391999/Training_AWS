@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { LoaderAction } from '../loader/loader.reducer';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../shared/services/auth.service';
 import { Product } from '../shared/types/product';
 import { ProductService } from './products.service';
 
@@ -11,23 +10,28 @@ import { ProductService } from './products.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css', '../shared/common/common-style.css'],
 })
-export class ProductsComponent implements OnInit {
-  loader!: Observable<boolean>;
+export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  userSubscription!: Subscription;
+  role!: string;
+  userId!: string;
 
   constructor(
     private readonly productService: ProductService,
-    private readonly store: Store<any>,
+    private readonly authService: AuthService,
     private readonly router: Router
   ) {}
 
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
   ngOnInit(): void {
-    this.loader = this.store.pipe(select((state) => state.loader.isOn));
-    this.store.dispatch({ type: LoaderAction.START });
     this.productService.getProducts().subscribe((data) => {
-      console.log('product list', data);
       this.products = data.data;
-      this.store.dispatch({ type: LoaderAction.STOP });
+      this.userSubscription = this.authService.user.subscribe((userDetail) => {
+        (this.role = userDetail ? userDetail.role : ''),
+          (this.userId = userDetail ? userDetail.id : '');
+      });
     });
   }
 

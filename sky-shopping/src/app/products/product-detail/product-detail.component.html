@@ -1,8 +1,8 @@
-<app-loader *ngIf="loader | async"></app-loader>
-<div class="product-detail" *ngIf="!(loader | async)">
+<app-loader></app-loader>
+<div class="product-detail" *ngIf="product !== undefined">
   <div class="product-detail-content">
     <div class="product-image">
-      <img [src]="product.imageUrl" alt="product.name" loading="lazy" />
+      <img [src]="product.imageUrl" alt="product.name" class="skeleton" />
     </div>
     <div class="product-info">
       <div class="product-name">
@@ -15,7 +15,13 @@
         {{ product.description }}
       </div>
       <div class="product-add-to-cart" *ngIf="role === 'user'">
-        <button class="btn-blue" mat-raised-button>Add To cart</button>
+        <button
+          class="btn-blue"
+          mat-raised-button
+          (click)="addToCart(product._id)"
+        >
+          Add To cart
+        </button>
       </div>
     </div>
   </div>

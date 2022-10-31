@@ -1,15 +1,25 @@
-<app-loader *ngIf="loader | async"></app-loader>
-<div class="product-list" *ngIf="!(loader | async)">
+<app-loader></app-loader>
+<div class="product-list">
   <div class="product-list-title">
     <p>Product List</p>
-    <button class="btn-blue" type="button" mat-button (click)="onAddProduct()">
+    <button
+      class="btn-blue"
+      type="button"
+      mat-button
+      (click)="onAddProduct()"
+      *ngIf="role === 'admin'"
+    >
       Add Product
     </button>
   </div>
   <div class="products" *ngIf="products.length > 0">
     <mat-grid-list cols="3" rowHeight="500px" gutterSize="15px">
       <mat-grid-tile *ngFor="let prod of products">
-        <app-product [product]="prod"></app-product>
+        <app-product
+          [product]="prod"
+          [role]="role"
+          [userId]="userId"
+        ></app-product>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

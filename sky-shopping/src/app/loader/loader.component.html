@@ -1,5 +1,4 @@
-<div class="loader-wrapper">
-    <div class="loader-icon">
-      Loading...
-    </div>
-  </div>
+<div class="overlay" *ngIf="loader | async">
+  <mat-progress-spinner class="spinner" mode="indeterminate">
+  </mat-progress-spinner>
+</div>

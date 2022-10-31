@@ -4,6 +4,7 @@
     [src]="product.imageUrl"
     alt="product.name"
     (click)="onProductSelect(product._id)"
+    class="skeleton"
   />
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>

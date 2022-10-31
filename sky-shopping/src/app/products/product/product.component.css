@@ -1,15 +1,23 @@
 .example-card {
-    max-width: 400px;
-    min-width: 400px;
-    min-width: auto;
-    min-height: 350px;
-  }
-  
-  .example-header-image {
-    background-size: cover;
-  }
+  max-width: 400px;
+  min-width: 400px;
+  min-width: auto;
+  min-height: 350px;
+}
 
-  .btn-blue {
-    min-width: 100%;
-    margin: 0 10px;
-  }
+.example-header-image {
+  background-size: cover;
+}
+
+.btn-blue {
+  min-width: 100%;
+  margin: 0 10px;
+}
+
+.example-card img {
+  cursor: pointer;
+  min-height: 177px;
+  max-height: 177px;
+  min-width: 377px;
+  max-width: 377px;
+}

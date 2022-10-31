@@ -3,6 +3,7 @@ import { CartService } from "../../core/cart/service/cart.service";
 import { MongoDb } from "../../core/common/db";
 import { HttpError } from "../../core/common/httpError";
 import { responseHandler } from "../../core/common/responseHandler";
+import { validateObjectId } from "../../core/common/validateObjectId";
 import { OrderService } from "../../core/order/service/order.service";
 import { CreateOrderRequestDTO } from "../../core/order/validators/createOrderRequest.dto";
 
@@ -27,10 +28,11 @@ export const handler = async (
   const cartService = new CartService(db);
   let response;
   try {
+    const userId = validateObjectId(createOrderReq.user);
     const newOrder = await orderService.createOrder(createOrderReq);
 
     if (newOrder) {
-      await cartService.removeCart(createOrderReq.user);
+      await cartService.removeCart(userId);
     }
     response = responseHandler(false, {
       statusCode: 200,
