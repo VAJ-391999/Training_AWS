@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ProductDetailToUpdate } from "../../type/product/product-detail-to-update";
 import { CreateProductRequestDTO } from "../validators/createProductRequest.dto";
 
 export class ProductRepository {
@@ -22,5 +23,24 @@ export class ProductRepository {
 
   getBulkProducts = (ids: mongoose.Types.ObjectId[]) => {
     return this.productModel.find({ $in: [...ids] });
+  };
+
+  editProduct = (
+    id: mongoose.Types.ObjectId,
+    productDetailsToUpdate: ProductDetailToUpdate
+  ) => {
+    return this.productModel.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          ...productDetailsToUpdate,
+        },
+      },
+      { new: true }
+    );
+  };
+
+  deleteProduct = (id: mongoose.Types.ObjectId) => {
+    return this.productModel.findOneAndDelete({ _id: id });
   };
 }

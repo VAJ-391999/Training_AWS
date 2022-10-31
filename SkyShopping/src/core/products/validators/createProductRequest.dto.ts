@@ -9,4 +9,7 @@ export class CreateProductRequestDTO {
 
   @IsString()
   imageUrl: string;
+
+  @IsString()
+  description: string;
 }

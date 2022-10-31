@@ -1,4 +1,4 @@
-import { Prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, Prop, Ref } from "@typegoose/typegoose";
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Types } from "mongoose";
 import { Product } from "../../products/model/product";
@@ -12,6 +12,12 @@ export class CartItemInfo {
   quantity: number;
 }
 
+@modelOptions({
+  schemaOptions: {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
+})
 export class Cart extends TimeStamps implements Base {
   _id: Types.ObjectId;
   id: string;

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CreateProduct, Product } from '../shared/types/product';
+import { CreateProduct, EditProduct, Product } from '../shared/types/product';
 import { Response } from '../shared/types/response';
 
 @Injectable()
@@ -31,7 +31,6 @@ export class ProductService {
       .pipe(
         take(1),
         map((res) => {
-          console.log('res', res);
           return res;
         })
       );
@@ -55,6 +54,27 @@ export class ProductService {
         `${environment.apiBaseUrl}/products/bulk`,
         productIds
       )
+      .pipe(
+        take(1),
+        map((res) => res)
+      );
+  };
+
+  editProduct = (id: string, editProduct: EditProduct) => {
+    return this.httpClient
+      .patch<Response<Product>>(
+        `${environment.apiBaseUrl}/products/${id}`,
+        editProduct
+      )
+      .pipe(
+        take(1),
+        map((res) => res)
+      );
+  };
+
+  deleteProduct = (id: string) => {
+    return this.httpClient
+      .delete<Response<Product>>(`${environment.apiBaseUrl}/products/${id}`)
       .pipe(
         take(1),
         map((res) => res)

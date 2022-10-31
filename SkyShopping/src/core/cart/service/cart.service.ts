@@ -113,14 +113,29 @@ export class CartService {
   };
 
   getCartDetail = async (userId: mongoose.Types.ObjectId) => {
-    const foundCart = await this.cartRepository.findCartByUserId(userId);
-    console.log("cart", foundCart);
+    let foundCart = await this.cartRepository.findCartByUserId(userId);
+    console.log("cart", JSON.stringify(foundCart));
 
     if (!foundCart) {
       throw new HttpError({
         statusCode: 404,
         message: "Cart not found",
         data: null,
+      });
+    }
+
+    let calculatedTotalPrice: number = 0;
+
+    foundCart.items.forEach((item: any) => {
+      calculatedTotalPrice =
+        calculatedTotalPrice + item.product.unitPrice * item.quantity;
+    });
+
+    if (foundCart.totalPrice !== calculatedTotalPrice) {
+      foundCart = this.cartRepository.updateCart({
+        user: foundCart.user,
+        items: foundCart.items,
+        totalPrice: calculatedTotalPrice,
       });
     }
 

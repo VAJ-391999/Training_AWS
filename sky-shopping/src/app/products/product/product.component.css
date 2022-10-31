@@ -9,7 +9,7 @@
   background-size: cover;
 }
 
-.btn-blue {
+.user-product-action .btn-blue {
   min-width: 100%;
   margin: 0 10px;
 }
@@ -20,4 +20,21 @@
   max-height: 177px;
   min-width: 377px;
   max-width: 377px;
+}
+
+.admin-product-action {
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-product-action > * {
+  flex: 1;
+}
+
+.admin-product-action button {
+  width: 100%;
+}
+
+mat-card-content {
+  min-height: 60px;
 }

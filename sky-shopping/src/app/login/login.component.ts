@@ -11,11 +11,10 @@ import { UserService } from '../shared/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   error: boolean = false;
   message: string = '';
-  userSubscription!: Subscription;
   role!: string;
 
   constructor(
@@ -23,10 +22,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly formBuilder: FormBuilder
   ) {}
-  ngOnDestroy(): void {
-    console.log('Login unsubscribe');
-    // this.userSubscription.unsubscribe();
-  }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {

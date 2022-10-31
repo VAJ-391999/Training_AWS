@@ -36,6 +36,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   onAddProduct = () => {
-    this.router.navigate(['/admin/products/add']);
+    this.router.navigate(['/admin/products/add'], {
+      queryParams: {
+        edit: false,
+      },
+    });
   };
 }

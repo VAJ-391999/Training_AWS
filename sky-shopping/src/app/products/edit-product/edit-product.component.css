@@ -1,21 +1,30 @@
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 .product {
-    padding: 60px;
+  padding: 60px;
 }
 
 .product-title p {
-    font-size: 40px;
-    color: #1e2b58;
+  font-size: 40px;
+  color: #1e2b58;
 }
 
 .product-form {
-    padding: 20px 0;
+  padding: 20px 0;
 }
 
 .btn-add-product {
-    background-color: #1e2b58;
-    color: #A2A2A1FF;
+  background-color: #1e2b58;
+  color: #a2a2a1ff;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  margin-top: 20px;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #1e2b58;
 }

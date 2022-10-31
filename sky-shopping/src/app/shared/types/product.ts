@@ -12,3 +12,5 @@ export type CreateProduct = Omit<
   Product,
   'id' | '_id' | 'createdAt' | 'updatedAt'
 >;
+
+export type EditProduct = Partial<CreateProduct>;

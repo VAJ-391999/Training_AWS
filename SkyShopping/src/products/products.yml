@@ -19,3 +19,17 @@ getProductDetail:
         path: /products/{productId}
         method: GET
         authorizer: ${self:custom.authorizer.users}
+editProductDetail:
+  handler: src/products/functions/editProduct.handler
+  events:
+    - http:
+        path: /products/{productId}
+        method: PATCH
+        authorizer: ${self:custom.authorizer.users}
+deleteProduct:
+  handler: src/products/functions/deleteProduct.handler
+  events:
+    - http:
+        path: /products/{productId}
+        method: DELETE
+        authorizer: ${self:custom.authorizer.users}

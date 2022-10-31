@@ -15,9 +15,17 @@
       {{ product.description }}
     </p>
   </mat-card-content>
-  <mat-card-actions *ngIf="role === 'user'">
+  <mat-card-actions *ngIf="role === 'user'" class="user-product-action">
     <button mat-button class="btn-blue" (click)="addToCart(product._id)">
       Add To Cart
+    </button>
+  </mat-card-actions>
+  <mat-card-actions *ngIf="role === 'admin'" class="admin-product-action">
+    <button mat-button class="btn-blue" (click)="editProduct(product._id)">
+      Edit
+    </button>
+    <button mat-button class="btn-blue" (click)="deletedProduct(product._id)">
+      Delete
     </button>
   </mat-card-actions>
 </mat-card>

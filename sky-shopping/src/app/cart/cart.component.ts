@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CartAction } from '../shared/common/cart-action';
 import { AuthService } from '../shared/services/auth.service';
 import { Cart } from '../shared/types/cart';
@@ -11,21 +12,25 @@ import { CartService } from './cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css', '../shared/common/common-style.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cart!: Cart;
   productList: Product[] = [];
   userId!: string;
   isPriceValid: boolean = false;
+  userSubscription!: Subscription;
 
   constructor(
     private readonly cartService: CartService,
     private readonly authService: AuthService,
     private readonly router: Router
   ) {}
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
-    console.log('CArt', this.cart);
-    this.authService.user.subscribe((res) => {
+    console.log('Cart', this.cart);
+    this.userSubscription = this.authService.user.subscribe((res) => {
       this.userId = res ? res.id : '';
       this.onInit();
     });

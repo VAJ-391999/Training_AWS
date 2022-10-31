@@ -1,9 +1,9 @@
 <app-loader></app-loader>
 <div class="product">
   <div class="product-title">
-    <p>Add Product</p>
+    <p>{{ edit === "true" ? "Edit" : "Add" }} Product</p>
   </div>
-  <div class="product-form">
+  <div class="product-form" *ngIf="productForm">
     <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm)">
       <mat-form-field class="name-field" appearance="fill">
         <mat-label>ProductName</mat-label>
@@ -68,20 +68,32 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-slide-toggle
+        *ngIf="edit === 'true'"
+        [checked]="edit === 'true'"
+        (change)="imageUpdateToggleChange($event)"
+        >Update image</mat-slide-toggle
+      ><br />
+
       <input
         (change)="onFileSelected($event)"
         #fileInput
         type="file"
         id="file"
+        *ngIf="displayImageUpload()"
       /><br />
 
+      <div class="progress-bar" *ngIf="progressValue | async as val">
+        <mat-progress-bar mode="determinate" [value]="val"></mat-progress-bar>
+        <br />
+      </div>
       <button
         class="btn-add-product"
         mat-raised-button
         color="primary"
-        [disabled]="!productForm.valid"
+        [disabled]="!(productForm.valid && isUrlSet)"
       >
-        Add Product
+        {{ edit === "true" ? "Edit" : "Add" }} Product
       </button>
     </form>
   </div>
