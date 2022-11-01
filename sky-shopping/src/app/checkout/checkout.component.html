@@ -5,8 +5,8 @@
   </div>
   <div class="checkout-detail">
     <div class="checkout-info">
-      <div class="residential-info">
-        <form [formGroup]="orderForm" (ngSubmit)="placeOrder(orderForm)">
+      <form [formGroup]="orderForm" (ngSubmit)="placeOrder(orderForm)">
+        <div class="residential-info">
           <mat-form-field class="addressLine1-field" appearance="fill">
             <mat-label>Address line 1</mat-label>
             <input
@@ -140,7 +140,11 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Payment Method</mat-label>
-            <mat-select formControlName="paymentMethod" required>
+            <mat-select
+              formControlName="paymentMethod"
+              required
+              (selectionChange)="paymentMethodChange($event.value)"
+            >
               <mat-option
                 *ngFor="let paymentMethod of paymentMethodList"
                 [value]="paymentMethod"
@@ -152,18 +156,48 @@
               >Payment method is required</mat-error
             >
           </mat-form-field>
+        </div>
+        <div class="payment-info">
+          <div class="payment-title">
+            <p>Payment Information</p>
+          </div>
+          <mat-form-field class="fullName-field" appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input
+              type="text"
+              name="fullName"
+              id="fullName"
+              matInput
+              formControlName="fullName"
+              placeholder="Tina Rameshbhai Chavda"
+            />
+            <mat-error *ngIf="orderForm.get('fullName')!.hasError('required')">
+              FullName is required filed
+            </mat-error>
+            <mat-error *ngIf="orderForm.get('fullName')!.hasError('minlength')">
+              FullName must at least 3 character long
+            </mat-error>
+            <mat-error *ngIf="orderForm.get('fullName')!.hasError('maxlength')">
+              FullName must not have more than 20 characters
+            </mat-error>
+          </mat-form-field>
 
-          <button
-            class="btn-checkout"
-            mat-raised-button
-            color="primary"
-            [disabled]="!orderForm.valid"
-          >
-            Place Order
-          </button>
-        </form>
-      </div>
-      <div class="payment-info">payment</div>
+          <div id="card-element" class="field"></div>
+        </div>
+        <button
+          class="btn-checkout"
+          mat-raised-button
+          color="primary"
+          [disabled]="!orderForm.valid"
+        >
+          Place Order
+          {{
+            orderForm.get("paymentMethod")!.value !== "Cash on Delivery"
+              ? "& Create Payment"
+              : ""
+          }}
+        </button>
+      </form>
     </div>
     <div class="order-summary">
       <div class="order-summary-title">
@@ -174,7 +208,7 @@
           <mat-card-title-group>
             <mat-card-title>{{ item.product.name }}</mat-card-title>
             <mat-card-subtitle
-              >Price: {{ item.product.unitPrice }} Rs.</mat-card-subtitle
+              >Price: {{ item.product.unitPrice }} INR</mat-card-subtitle
             >
             <mat-card-subtitle>Qty: {{ item.quantity }}</mat-card-subtitle>
             <img

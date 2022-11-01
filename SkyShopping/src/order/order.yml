@@ -4,4 +4,5 @@ createOrder:
     - http:
         path: /order/create
         method: POST
+        cors: true
         authorizer: ${self:custom.authorizer.users}

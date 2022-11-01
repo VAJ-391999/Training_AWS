@@ -1,1 +1,1 @@
-export const paymentMethod = ['Cash on Delivery'];
+export const paymentMethod = ['Cash on Delivery', 'Credit Card'];

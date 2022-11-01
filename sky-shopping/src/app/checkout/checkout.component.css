@@ -2,7 +2,8 @@
   padding: 60px 50px 30px 50px;
 }
 
-.checkout-title p {
+.checkout-title p,
+.payment-title p {
   font-size: 40px;
   color: #1e2b58;
   padding-bottom: 20px;
@@ -11,6 +12,10 @@
 .checkout-detail {
   display: flex;
   justify-content: space-between;
+}
+
+.residential-info {
+  margin-bottom: 20px;
 }
 
 .checkout-detail > * {

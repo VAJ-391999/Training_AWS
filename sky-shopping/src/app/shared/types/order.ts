@@ -10,10 +10,13 @@ export interface CreateOrder {
   country: string;
   postalCode: string;
   paymentMethod: PaymentMethod;
+  fullName: string;
+  stripeToken?: Record<string, any>;
 }
 
 export enum PaymentMethod {
   CASH_ON_DELIVERY = 'Cash on Delivery',
+  CREDIT_CARD = 'Credit Card',
 }
 
 export interface OrderItemInfo {

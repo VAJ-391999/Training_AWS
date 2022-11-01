@@ -54,4 +54,10 @@ export class Order extends TimeStamps implements Base {
 
   @Prop()
   paymentMethod: PaymentMethod;
+
+  @Prop()
+  fullName: string;
+
+  @Prop()
+  stripeToken: Record<string, any>;
 }

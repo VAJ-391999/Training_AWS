@@ -1,4 +1,10 @@
-import { IsDefined, IsEnum, IsNumber, IsString } from "class-validator";
+import {
+  IsDefined,
+  IsEnum,
+  IsNumber,
+  IsObject,
+  IsString,
+} from "class-validator";
 import { PaymentMethod } from "../../type/order/payment";
 
 export class CreateOrderRequestDTO {
@@ -34,6 +40,12 @@ export class CreateOrderRequestDTO {
 
   @IsEnum(PaymentMethod)
   paymentMethod: PaymentMethod;
+
+  @IsString()
+  fullName: string;
+
+  @IsObject()
+  stripeToken?: Record<string, any>;
 }
 
 export interface OrderItemInfo {

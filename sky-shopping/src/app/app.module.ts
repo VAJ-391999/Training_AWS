@@ -23,6 +23,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
 import { CartService } from './cart/cart.service';
 import { CheckoutService } from './checkout/checkout.service';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -36,6 +37,9 @@ import { CheckoutService } from './checkout/checkout.service';
     StoreModule.forRoot({ loader: reducer }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
+    NgxStripeModule.forRoot(
+      'pk_test_51LzCIiSB37q7uKsrbbgSroYRyjLgj6QoKjozfcGrgMjsl7B7NBi8kxKYHlcI2ybV0BIy7YAAQDpzW8WUozUGk41I00SRCOaD5h'
+    ),
   ],
   providers: [
     UserService,

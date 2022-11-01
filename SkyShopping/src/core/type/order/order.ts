@@ -12,4 +12,8 @@ export interface OrderInfo {
   address: OrderAddress;
 
   paymentMethod: PaymentMethod;
+
+  fullName: string;
+
+  stripeToken?: Record<string, any>;
 }

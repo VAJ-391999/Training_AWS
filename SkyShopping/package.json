@@ -27,6 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "serverless-offline": "^7.0.0",
-    "serverless-plugin-typescript": "^2.1.4"
+    "serverless-plugin-typescript": "^2.1.4",
+    "stripe": "^10.15.0"
   }
 }
