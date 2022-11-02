@@ -24,6 +24,7 @@ import { environment } from 'src/environments/environment';
 import { CartService } from './cart/cart.service';
 import { CheckoutService } from './checkout/checkout.service';
 import { NgxStripeModule } from 'ngx-stripe';
+import { OrderService } from './order/order.service';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -56,6 +57,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     },
     CartService,
     CheckoutService,
+    OrderService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,86 @@
+.order-detail {
+  padding: 60px 50px 30px 50px;
+}
+
+.order-detail-title p {
+  font-size: 40px;
+  color: #1e2b58;
+  padding-bottom: 20px;
+}
+
+.order-items {
+  border: 2px solid #a2a2a1ff;
+  border-radius: 10px;
+}
+
+.example-card,
+.order-other-info {
+  margin: 30px;
+}
+
+.order-price {
+  min-height: 60px;
+  background-color: #1e2b58;
+  text-align: right;
+  border-radius: 0 0 10px 10px;
+}
+
+.order-price p {
+  color: #fff;
+  padding: 20px;
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.order-price p span {
+  font-size: 30px;
+}
+
+.order-detail mat-card-subtitle {
+  font-size: 20px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-item img {
+  min-width: 300px;
+}
+
+mat-card-title p {
+  line-height: 2;
+  text-align: center;
+}
+
+.order-prod-info {
+  color: #a2a2a1ff;
+}
+
+.order-other-info {
+  display: flex;
+}
+
+.order-other-info > :first-child {
+  padding-right: 30px;
+}
+
+.order-other-info > :nth-child(2) {
+  padding-left: 30px;
+}
+
+.order-other-info h1 {
+  color: #1e2b58;
+}
+
+.order-other-info > * {
+  flex: 1;
+}
+
+.order-other-info .delivery-address p,
+.payment-info p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}

@@ -11,6 +11,13 @@
       >
         <a routerLink="{{ role }}/cart"> My Cart </a>
       </li>
+      <li
+        class="header-list-item"
+        routerLinkActive="active"
+        *ngIf="role === 'user'"
+      >
+        <a routerLink="{{ role }}/order"> My Orders </a>
+      </li>
       <li class="header-list-item">
         <button class="btn-logout" (click)="onLogout()">Logout</button>
       </li>

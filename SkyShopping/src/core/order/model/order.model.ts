@@ -1,4 +1,4 @@
-import { Prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, Prop, Ref } from "@typegoose/typegoose";
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Types } from "mongoose";
 import { Product } from "../../products/model/product";
@@ -36,6 +36,12 @@ export class OrderAddress {
   postalCode: string;
 }
 
+@modelOptions({
+  schemaOptions: {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
+})
 export class Order extends TimeStamps implements Base {
   _id: Types.ObjectId;
   id: string;

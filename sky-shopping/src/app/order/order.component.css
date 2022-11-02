@@ -1,0 +1,38 @@
+.order {
+  padding: 60px 50px 30px 50px;
+}
+
+.order-title p {
+  font-size: 40px;
+  color: #1e2b58;
+  padding-bottom: 20px;
+}
+
+.order table.mat-elevation-z8 {
+  margin: 0;
+  width: 100%;
+}
+
+.order-table table {
+  transition: 0.3s;
+}
+
+.order-table th {
+  font-size: 18px;
+  color: #1e2b58;
+}
+
+.order-table .mat-row:hover {
+  transform: scale(1.01);
+  box-shadow: 2px 2px 12px 2px #a2a2a1ff;
+}
+
+.order-id-link {
+  font-size: 15px;
+  color: #1e2b58;
+  font-weight: 500;
+}
+
+.order-id-link:hover {
+  cursor: pointer;
+}

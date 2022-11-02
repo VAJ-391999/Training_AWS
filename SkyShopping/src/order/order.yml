@@ -6,3 +6,19 @@ createOrder:
         method: POST
         cors: true
         authorizer: ${self:custom.authorizer.users}
+listOrder:
+  handler: src/order/functions/listOrder.handler
+  events:
+    - http:
+        path: /order/list
+        method: POST
+        cors: true
+        authorizer: ${self:custom.authorizer.users}
+getOrderDetail:
+  handler: src/order/functions/getOrderDetail.handler
+  events:
+    - http:
+        path: /order/{orderId}
+        method: GET
+        cors: true
+        authorizer: ${self:custom.authorizer.users}

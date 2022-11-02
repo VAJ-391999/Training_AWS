@@ -6,6 +6,9 @@ import { PaymentMethod } from "../../type/order/payment";
 import { OrderRepository } from "../repository/order.repository";
 import { CreateOrderRequestDTO } from "../validators/createOrderRequest.dto";
 import { StripePayment } from "../../common/stripe";
+import mongoose from "mongoose";
+import { Order } from "../model/order.model";
+import { HttpError } from "../../common/httpError";
 
 export class OrderService {
   private readonly orderRepository: OrderRepository;
@@ -67,5 +70,29 @@ export class OrderService {
     } catch (error) {
       throw error;
     }
+  };
+
+  listOrder = async (userId: mongoose.Types.ObjectId): Promise<Order[]> => {
+    try {
+      const orderList: Order[] = await this.orderRepository.listOrder(userId);
+      return orderList;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  getOrderDetail = async (orderId: mongoose.Types.ObjectId): Promise<Order> => {
+    const foundOrder: Order = await this.orderRepository.getOrderDetail(
+      orderId
+    );
+
+    if (!foundOrder) {
+      throw new HttpError({
+        statusCode: 404,
+        data: null,
+        message: "Order not found",
+      });
+    }
+    return foundOrder;
   };
 }

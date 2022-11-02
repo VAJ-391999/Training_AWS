@@ -1,3 +1,5 @@
+import { Product } from './product';
+
 export interface CreateOrder {
   user: string;
   orderItems: OrderItemInfo[];
@@ -42,6 +44,8 @@ export interface Order {
   orderPrice: number;
   address: OrderAddress;
   paymentMethod: PaymentMethod;
+  fullName: string;
+  stripeToken?: Record<string, any>;
   createdAt: Date;
   updatedAt: Date;
 }

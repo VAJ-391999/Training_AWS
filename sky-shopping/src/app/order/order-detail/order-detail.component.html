@@ -1,0 +1,71 @@
+<app-loader></app-loader>
+<div class="order-detail">
+  <div class="order-detail-title">
+    <p>Order Detail</p>
+  </div>
+  <div class="order-items" *ngIf="order !== undefined">
+    <mat-card class="example-card" *ngFor="let item of order.orderItems">
+      <div class="order-item">
+        <img mat-card-md-image [src]="item.product.imageUrl" class="skeleton" />
+        <mat-card-title>
+          <p class="order-prod-info">{{ item.product.name }}</p>
+        </mat-card-title>
+        <mat-card-title>
+          <p class="order-prod-info">
+            {{ item.product.unitPrice }} INR
+          </p></mat-card-title
+        >
+        <mat-card-title>
+          <p class="order-prod-info">
+            qty: {{ item.quantity }}
+          </p></mat-card-title
+        >
+      </div>
+    </mat-card>
+    <div class="order-other-info">
+      <div class="delivery-address">
+        <h1>Delivery Address</h1>
+        <p>
+          <span>AddressLine1 :</span>
+          <span>{{ order.address.addressLine1 }}</span>
+        </p>
+        <p>
+          <span>AddressLine2 :</span>
+          <span>{{ order.address.addressLine2 }}</span>
+        </p>
+        <p>
+          <span>City :</span>
+          <span>{{ order.address.city }}</span>
+        </p>
+        <p>
+          <span>District :</span>
+          <span>{{ order.address.district }}</span>
+        </p>
+        <p>
+          <span>State :</span>
+          <span>{{ order.address.state }}</span>
+        </p>
+        <p>
+          <span>Country :</span>
+          <span>{{ order.address.country }}</span>
+        </p>
+        <p>
+          <span>Postal Code :</span>
+          <span>{{ order.address.postalCode }}</span>
+        </p>
+      </div>
+      <div class="payment-info">
+        <h1>Payment Information</h1>
+        <p>
+          <span>Payment Method :</span>
+          <span>{{ order.paymentMethod }}</span>
+        </p>
+      </div>
+    </div>
+    <div class="order-price">
+      <p>
+        Total Order Price: <span>{{ order.orderPrice }} INR</span>
+      </p>
+    </div>
+  </div>
+</div>

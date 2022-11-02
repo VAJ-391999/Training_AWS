@@ -187,7 +187,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log('Place order', res.data);
       },
       complete: () => {
-        this.router.navigate(['user', 'products']);
+        this.router.navigate(['user', 'order']);
       },
     });
   };
