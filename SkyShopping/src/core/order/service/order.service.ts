@@ -43,7 +43,8 @@ export class OrderService {
       let createNewOrder;
       let paymentComplete: boolean = false;
       if (
-        newOrderDetails.paymentMethod === PaymentMethod.CREDIT_CARD &&
+        newOrderDetails.paymentMethod.toLocaleLowerCase() ===
+          PaymentMethod.CREDIT_CARD.toLocaleLowerCase() &&
         newOrderDetails.stripeToken
       ) {
         const stripe = new StripePayment();
@@ -51,8 +52,13 @@ export class OrderService {
           newOrderDetails.orderPrice,
           newOrderDetails.stripeToken.id
         );
+      } else if (
+        newOrderDetails.paymentMethod.toLocaleLowerCase() ===
+        PaymentMethod.CASH_ON_DELIVERY.toLocaleLowerCase()
+      ) {
+        paymentComplete = true;
       }
-
+      console.log(paymentComplete);
       if (paymentComplete) {
         createNewOrder = this.orderRepository.createOrder(orderInfo);
       }

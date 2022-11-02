@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   Elements,
   Element as StripeElement,
@@ -40,7 +41,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private readonly checkoutService: CheckoutService,
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly stripeService: StripeService
+    private readonly stripeService: StripeService,
+    private readonly router: Router
   ) {}
 
   ngOnDestroy(): void {
@@ -119,45 +121,25 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     console.log('orderForm', orderForm);
 
     const name = orderForm.get('fullName')!.value;
-    this.stripeService.createToken(this.card, { name }).subscribe((result) => {
-      if (result.token) {
-        // Use the token to create a charge or a customer
-        // https://stripe.com/docs/charges
 
-        const createOrder: CreateOrder = {
-          user: this.userId,
-          orderItems: this.orderSummary.items.map((orderItem: any) => {
-            return {
-              product: orderItem.product._id,
-              quantity: orderItem.quantity,
-            };
-          }),
-          orderPrice: this.orderSummary.totalPrice,
-          addressLine1: orderForm.value.addressLine1,
-          addressLine2: orderForm.value.addressLine2,
-          city: orderForm.value.city,
-          district: orderForm.value.district,
-          state: orderForm.value.state,
-          country: orderForm.value.country,
-          postalCode: orderForm.value.postalCode,
-          paymentMethod: orderForm.value.paymentMethod,
-          fullName: orderForm.value.fullName,
-          stripeToken: result.token ?? '',
-        };
+    if (orderForm.value.paymentMethod === 'Credit Card') {
+      this.stripeService
+        .createToken(this.card, { name })
+        .subscribe((result) => {
+          if (result.token) {
+            // Use the token to create a charge or a customer
+            // https://stripe.com/docs/charges
+            this.createNewOrder(orderForm, result.token);
 
-        this.checkoutService.placeOrder(createOrder).subscribe({
-          next: (res) => {
-            console.log('Place order', res.data);
-          },
-          complete: () => {},
+            console.log(result.token);
+          } else if (result.error) {
+            // Error creating the token
+            console.log(result.error.message);
+          }
         });
-
-        console.log(result.token);
-      } else if (result.error) {
-        // Error creating the token
-        console.log(result.error.message);
-      }
-    });
+    } else {
+      this.createNewOrder(orderForm);
+    }
   };
 
   paymentMethodChange = (paymentMethod: string) => {
@@ -176,5 +158,37 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     //     this.orderForm.get('myEmailField')!.setValidators(this.fullNameValidator);
     //     this.orderForm.get('amount')!.setValidators(this.amountValidator);
     //   }
+  };
+
+  createNewOrder = (orderForm: FormGroup, token?: any) => {
+    const createOrder: CreateOrder = {
+      user: this.userId,
+      orderItems: this.orderSummary.items.map((orderItem: any) => {
+        return {
+          product: orderItem.product._id,
+          quantity: orderItem.quantity,
+        };
+      }),
+      orderPrice: this.orderSummary.totalPrice,
+      addressLine1: orderForm.value.addressLine1,
+      addressLine2: orderForm.value.addressLine2,
+      city: orderForm.value.city,
+      district: orderForm.value.district,
+      state: orderForm.value.state,
+      country: orderForm.value.country,
+      postalCode: orderForm.value.postalCode,
+      paymentMethod: orderForm.value.paymentMethod,
+      fullName: orderForm.value.fullName,
+      stripeToken: token ?? '',
+    };
+
+    this.checkoutService.placeOrder(createOrder).subscribe({
+      next: (res) => {
+        console.log('Place order', res.data);
+      },
+      complete: () => {
+        this.router.navigate(['user', 'products']);
+      },
+    });
   };
 }
