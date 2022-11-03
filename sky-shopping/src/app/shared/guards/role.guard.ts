@@ -1,3 +1,4 @@
+import { NgRedux } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -8,13 +9,15 @@ import {
 } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
+import { AuthActionType, IAuthState } from '../redux/auth.store';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class RoleGuardService implements CanActivate {
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly authStore: NgRedux<IAuthState>
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -35,6 +38,12 @@ export class RoleGuardService implements CanActivate {
 
     if (tokenPayload.role !== expectedRole) {
       this.authService.user.next(tokenPayload);
+      this.authStore.dispatch({
+        type: AuthActionType.LOGIN_SUCCESS,
+        payload: {
+          user: tokenPayload,
+        },
+      });
       if (tokenPayload.role === 'admin') {
         this.router.navigate(['/admin']);
         return false;

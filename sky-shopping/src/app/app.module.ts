@@ -25,7 +25,12 @@ import { CartService } from './cart/cart.service';
 import { CheckoutService } from './checkout/checkout.service';
 import { NgxStripeModule } from 'ngx-stripe';
 import { OrderService } from './order/order.service';
-
+import { NgRedux, NgReduxModule } from '@angular-redux/store';
+import {
+  authReducer,
+  AUTH_INIT_STATE,
+  IAuthState,
+} from './shared/redux/auth.store';
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [
@@ -41,6 +46,7 @@ import { OrderService } from './order/order.service';
     NgxStripeModule.forRoot(
       'pk_test_51LzCIiSB37q7uKsrbbgSroYRyjLgj6QoKjozfcGrgMjsl7B7NBi8kxKYHlcI2ybV0BIy7YAAQDpzW8WUozUGk41I00SRCOaD5h'
     ),
+    NgReduxModule,
   ],
   providers: [
     UserService,
@@ -61,4 +67,8 @@ import { OrderService } from './order/order.service';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(ngRedux: NgRedux<IAuthState>) {
+    ngRedux.configureStore(authReducer, AUTH_INIT_STATE);
+  }
+}

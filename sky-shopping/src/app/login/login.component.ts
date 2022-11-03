@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { select } from '@angular-redux/store';
 import { REGEX_PATTERN } from '../shared/common/regex-pattern';
 import { AuthService } from '../shared/services/auth.service';
-import { UserService } from '../shared/services/user.service';
+import { TokePayload } from '../shared/types/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   error: boolean = false;
   message: string = '';
   role!: string;
+  @select('user') user!: Observable<TokePayload>;
 
   constructor(
     private readonly router: Router,
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('redux user', this.user);
     if (this.authService.isLoggedIn()) {
       console.log('Data');
       this.router.navigate(['/user']);

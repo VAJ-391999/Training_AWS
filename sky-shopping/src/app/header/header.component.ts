@@ -1,3 +1,4 @@
+import { select } from '@angular-redux/store';
 import {
   Component,
   EventEmitter,
@@ -5,8 +6,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../shared/services/auth.service';
+import { Observable, Subscription } from 'rxjs';
+import { IAuthState } from '../shared/redux/auth.store';
+import { TokePayload } from '../shared/types/auth';
 
 @Component({
   selector: 'app-header',
@@ -17,21 +19,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output()
   logout = new EventEmitter();
 
+  @select('user') user!: Observable<TokePayload>;
+
   role!: string;
   userSubscription!: Subscription;
-  isLoggedIn!: boolean;
 
-  constructor(private readonly authService: AuthService) {}
+  constructor() {}
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user.subscribe({
-      next: (response) => {
-        console.log('user', response);
-        this.role = response ? response.role : '';
-      },
+    this.userSubscription = this.user.subscribe((response) => {
+      console.log('redux user', response);
+      this.role = response ? response.role : '';
     });
   }
 
