@@ -26,7 +26,6 @@ export class TokenInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     this.store.dispatch({ type: LoaderAction.START });
     this.token = this.authService.getToken();
-    console.log('Token', this.token);
     if (this.token) {
       request = request.clone({
         setHeaders: {
@@ -38,6 +37,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       catchError((err) => {
         console.log(err);
         if (err.status === 401) {
+          console.log('Status code 401');
           this.authService.userLogout();
         }
         let errorMessage;

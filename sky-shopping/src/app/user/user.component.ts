@@ -1,6 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../shared/services/auth.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,15 +6,7 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {}
-
-  onLogout = () => {
-    this.authService.userLogout();
-    this.router.navigate(['/login']);
-  };
 }

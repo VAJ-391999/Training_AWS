@@ -37,7 +37,6 @@ export class RoleGuardService implements CanActivate {
     const tokenPayload: any = jwtDecode(token);
 
     if (tokenPayload.role !== expectedRole) {
-      this.authService.user.next(tokenPayload);
       this.authStore.dispatch({
         type: AuthActionType.LOGIN_SUCCESS,
         payload: {

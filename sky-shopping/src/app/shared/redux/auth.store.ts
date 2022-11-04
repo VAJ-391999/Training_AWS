@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
-import { TokePayload } from '../types/auth';
+import { UserTokenPayload } from '../types/auth';
 
 export interface IAuthState {
-  user: TokePayload | null;
   isAuthenticated: boolean;
+  user: UserTokenPayload | null;
   errorMessage: string;
 }
 
@@ -31,7 +31,6 @@ export const authReducer: Reducer<IAuthState, any> = (
   switch (action.type) {
     case AuthActionType.LOGIN_SUCCESS:
       return {
-        ...state,
         user: action.payload.user,
         isAuthenticated: true,
         errorMessage: '',

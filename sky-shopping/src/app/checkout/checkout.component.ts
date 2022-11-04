@@ -1,3 +1,4 @@
+import { select } from '@angular-redux/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,10 +8,10 @@ import {
   ElementsOptions,
   StripeService,
 } from 'ngx-stripe';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CartService } from '../cart/cart.service';
 import { paymentMethod } from '../shared/common/payment-method';
-import { AuthService } from '../shared/services/auth.service';
+import { UserTokenPayload } from '../shared/types/auth';
 import { CreateOrder } from '../shared/types/order';
 import { CheckoutService } from './checkout.service';
 
@@ -28,6 +29,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   userId!: string;
   elements!: Elements;
   card!: StripeElement;
+  @select('user') user!: Observable<UserTokenPayload>;
 
   elementsOptions: ElementsOptions = {
     locale: 'en',
@@ -40,7 +42,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private readonly cartService: CartService,
     private readonly checkoutService: CheckoutService,
     private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService,
     private readonly stripeService: StripeService,
     private readonly router: Router
   ) {}
@@ -106,20 +107,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       fullName: ['', this.fullNameValidator],
     });
 
-    this.userSubscription = this.authService.user.subscribe((user) => {
+    this.userSubscription = this.user.subscribe((user) => {
       this.userId = user ? user.id : '';
       this.cartService.getCart(this.userId).subscribe();
 
       this.cartSubscription = this.cartService.cart.subscribe((res) => {
-        console.log('order summary', res);
         this.orderSummary = res;
       });
     });
   };
 
   placeOrder = (orderForm: FormGroup) => {
-    console.log('orderForm', orderForm);
-
     const name = orderForm.get('fullName')!.value;
 
     if (orderForm.value.paymentMethod === 'Credit Card') {

@@ -1,13 +1,20 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../shared/services/auth.service';
+import { Observable, Subscription } from 'rxjs';
 import { Order } from '../shared/types/order';
 import { OrderService } from './order.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { select } from '@angular-redux/store';
+import { UserTokenPayload } from '../shared/types/auth';
 
 export interface OrderElement {
   id: string;
@@ -22,7 +29,7 @@ export interface OrderElement {
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
-export class OrderComponent implements OnInit, AfterViewInit {
+export class OrderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -38,49 +45,53 @@ export class OrderComponent implements OnInit, AfterViewInit {
   ];
   orderSource: OrderElement[] = [];
   orderDataSource = new MatTableDataSource<OrderElement>(this.orderSource);
+  @select('user') user!: Observable<UserTokenPayload>;
 
   constructor(
     private readonly orderService: OrderService,
     private readonly router: Router,
-    private readonly authService: AuthService,
     private readonly _liveAnnouncer: LiveAnnouncer
   ) {}
 
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
+
   ngAfterViewInit() {
-    console.log('ngAfterViewInit', this.sort);
     this.orderDataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
+    console.log('order ngoninit');
     this.hidePaginator();
-    this.userSubscription = this.authService.user.subscribe((user) => {
+    this.userSubscription = this.user.subscribe((user) => {
       this.userId = user ? user.id : '';
-      this.orderService.getOrderList(this.userId).subscribe({
-        next: (res) => {
-          if (res.data) {
-            console.log('Order List', res.data);
-            this.orderList = res.data;
-            this.hidePaginator();
-            this.orderSource = this.orderList.map((order) => {
-              return {
-                id: order._id,
-                name: order.fullName,
-                orderPrice: order.orderPrice,
-                paymentMethod: order.paymentMethod,
-                createdAt: order.createdAt,
-              };
-            });
-          }
-        },
-        complete: () => {
-          this.orderDataSource = new MatTableDataSource<OrderElement>(
-            this.orderSource
-          );
-          this.orderDataSource.paginator = this.paginator;
-          this.orderDataSource.sort = this.sort;
-          console.log(this.orderDataSource, this.sort);
-        },
-      });
+      if (this.userId !== '') {
+        this.orderService.getOrderList(this.userId).subscribe({
+          next: (res) => {
+            if (res.data) {
+              this.orderList = res.data;
+              this.hidePaginator();
+              this.orderSource = this.orderList.map((order) => {
+                return {
+                  id: order._id,
+                  name: order.fullName,
+                  orderPrice: order.orderPrice,
+                  paymentMethod: order.paymentMethod,
+                  createdAt: order.createdAt,
+                };
+              });
+            }
+          },
+          complete: () => {
+            this.orderDataSource = new MatTableDataSource<OrderElement>(
+              this.orderSource
+            );
+            this.orderDataSource.paginator = this.paginator;
+            this.orderDataSource.sort = this.sort;
+          },
+        });
+      }
     });
   }
 

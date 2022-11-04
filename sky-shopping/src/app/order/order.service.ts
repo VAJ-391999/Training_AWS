@@ -7,7 +7,6 @@ import { Response } from '../shared/types/response';
 
 @Injectable()
 export class OrderService {
-  orderList = new BehaviorSubject<Order[]>([]);
   constructor(private readonly httpClient: HttpClient) {}
 
   getOrderList = (userId: string) => {
@@ -17,11 +16,6 @@ export class OrderService {
       })
       .pipe(
         take(1),
-        tap((res) => {
-          if (res.data) {
-            this.orderList.next(res.data);
-          }
-        }),
         map((res) => res)
       );
   };

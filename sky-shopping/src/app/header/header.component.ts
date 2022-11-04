@@ -6,9 +6,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { IAuthState } from '../shared/redux/auth.store';
-import { TokePayload } from '../shared/types/auth';
+import { UserTokenPayload } from '../shared/types/auth';
 
 @Component({
   selector: 'app-header',
@@ -19,12 +19,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output()
   logout = new EventEmitter();
 
-  @select('user') user!: Observable<TokePayload>;
+  @select('user') user!: Observable<UserTokenPayload>;
 
   role!: string;
   userSubscription!: Subscription;
 
-  constructor() {}
+  constructor(private readonly router: Router) {}
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }
@@ -37,6 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout = () => {
+    console.log('Logout');
+    this.router.navigate(['login']);
     this.logout.emit();
   };
 }

@@ -1,8 +1,9 @@
+import { select } from '@angular-redux/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CartAction } from '../shared/common/cart-action';
-import { AuthService } from '../shared/services/auth.service';
+import { UserTokenPayload } from '../shared/types/auth';
 import { Cart } from '../shared/types/cart';
 import { Product } from '../shared/types/product';
 import { CartService } from './cart.service';
@@ -18,10 +19,10 @@ export class CartComponent implements OnInit, OnDestroy {
   userId!: string;
   isPriceValid: boolean = false;
   userSubscription!: Subscription;
+  @select('user') user!: Observable<UserTokenPayload>;
 
   constructor(
     private readonly cartService: CartService,
-    private readonly authService: AuthService,
     private readonly router: Router
   ) {}
   ngOnDestroy(): void {
@@ -29,15 +30,15 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('Cart', this.cart);
-    this.userSubscription = this.authService.user.subscribe((res) => {
+    this.userSubscription = this.user.subscribe((res) => {
       this.userId = res ? res.id : '';
-      this.onInit();
+      if (this.userId !== '') {
+        this.onInit();
+      }
     });
   }
 
   onInit = () => {
-    console.log('userId', this.userId);
     this.cartService.getCart(this.userId).subscribe({
       next: (response) => {
         console.log('Get cart', response);
@@ -56,7 +57,6 @@ export class CartComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (res) => {
-          console.log('Cart', res);
           this.cart = res.data;
           this.validPrice();
         },

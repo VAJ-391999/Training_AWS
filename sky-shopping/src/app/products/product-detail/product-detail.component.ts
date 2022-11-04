@@ -1,8 +1,9 @@
+import { select } from '@angular-redux/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/cart.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserTokenPayload } from 'src/app/shared/types/auth';
 import { Product } from 'src/app/shared/types/product';
 import { ProductService } from '../products.service';
 
@@ -20,11 +21,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   userSubscription!: Subscription;
   role!: string;
   userId!: string;
+  @select('user') user!: Observable<UserTokenPayload>;
 
   constructor(
     private readonly productService: ProductService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly authService: AuthService,
     private readonly cartService: CartService,
     private readonly router: Router
   ) {}
@@ -33,7 +34,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user.subscribe({
+    this.userSubscription = this.user.subscribe({
       next: (res) => {
         this.role = res ? res.role : '';
         this.userId = res ? res.id : '';
