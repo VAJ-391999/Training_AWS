@@ -12,6 +12,23 @@
       Add Product
     </button>
   </div>
+  <div class="product-search">
+    <form #searchForm="ngForm">
+      <mat-form-field class="name-field" appearance="fill">
+        <input
+          type="text"
+          matInput
+          name="productSearch"
+          placeholder="Search product by name"
+          ngModel
+        />
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="search-result-section">
+    <p class="search-result">Search Result</p>
+    <p class="search-result-count">5 results found</p>
+  </div>
   <div class="products" *ngIf="products.length > 0">
     <mat-grid-list cols="3" rowHeight="500px" gutterSize="15px">
       <mat-grid-tile *ngFor="let prod of products">

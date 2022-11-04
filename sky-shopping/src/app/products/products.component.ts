@@ -1,7 +1,22 @@
 import { select } from '@angular-redux/store';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import {
+  concatMap,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  pluck,
+  Subscription,
+} from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
 import { UserTokenPayload } from '../shared/types/auth';
 import { Product } from '../shared/types/product';
@@ -12,7 +27,8 @@ import { ProductService } from './products.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css', '../shared/common/common-style.css'],
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('searchForm') searchForm!: NgForm;
   products: Product[] = [];
   userSubscription!: Subscription;
   role!: string;
@@ -21,9 +37,22 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly productService: ProductService,
-    private readonly authService: AuthService,
     private readonly router: Router
   ) {}
+  ngAfterViewInit(): void {
+    const formValue = this.searchForm.valueChanges;
+    formValue
+      ?.pipe(
+        // map((data) => data.productSearch)
+        pluck('productSearch'),
+        debounceTime(5000),
+        distinctUntilChanged(),
+        concatMap((data) => data)
+      )
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();

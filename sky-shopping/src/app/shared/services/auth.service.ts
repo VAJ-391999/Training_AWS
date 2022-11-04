@@ -2,15 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
-import { map, take } from 'rxjs';
+import { map, ReplaySubject, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Login } from '../types/login';
 import { Response } from '../types/response';
 import { NgRedux } from '@angular-redux/store';
 import { AuthActionType, IAuthState } from '../redux/auth.store';
+import { UserTokenPayload } from '../types/auth';
 
 @Injectable()
 export class AuthService {
+  recentLoggedInUser = new ReplaySubject<UserTokenPayload>(2);
   constructor(
     private readonly httpClient: HttpClient,
     private readonly router: Router,
@@ -31,6 +33,9 @@ export class AuthService {
                 type: AuthActionType.LOGIN_SUCCESS,
                 payload: { user: tokenPayload },
               });
+              if (tokenPayload.role === 'user') {
+                this.recentLoggedInUser.next(tokenPayload);
+              }
             }
           }
           return res;

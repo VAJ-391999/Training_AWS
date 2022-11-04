@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <div class="dashboard-title">Recent LoggedIn Users</div>
+  <div class="user-list">
+    <ul *ngFor="let video of videoStream">
+      <li>{{ video }}</li>
+    </ul>
+  </div>
+</div>

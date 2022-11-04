@@ -33,6 +33,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     EditProductComponent,
     MatCardModule,
     MatGridListModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class ProductModule {}
