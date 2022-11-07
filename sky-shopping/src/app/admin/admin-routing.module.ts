@@ -5,6 +5,7 @@ import { ProductDetailComponent } from '../products/product-detail/product-detai
 import { ProductsComponent } from '../products/products.component';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ManageLocationComponent } from './manage-location/manage-location.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'products/:productId',
         component: ProductDetailComponent,
+      },
+      {
+        path: 'manage/location',
+        component: ManageLocationComponent,
       },
     ],
   },

@@ -31,6 +31,7 @@ import {
   AUTH_INIT_STATE,
   IAuthState,
 } from './shared/redux/auth.store';
+import { ManageLocationService } from './admin/manage-location/manage-location.service';
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [
@@ -64,6 +65,7 @@ import {
     CartService,
     CheckoutService,
     OrderService,
+    ManageLocationService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,103 @@
+<div class="manage-location">
+  <div class="manage-location-title">
+    <p>Manage Location</p>
+  </div>
+  <div class="select-location-field">
+    <mat-radio-group
+      aria-label="Select an option"
+      (change)="locationFieldChange($event.value)"
+    >
+      <mat-radio-button
+        [value]="locationField"
+        *ngFor="let locationField of locationFieldList"
+        >{{ locationField }}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <div class="location-info">
+    <div class="location-title">
+      <p>{{ locationFieldValue }}</p>
+    </div>
+    <button class="location-add-btn" class="btn-blue" (click)="openDialog()">
+      Add {{ locationFieldValue }}
+    </button>
+  </div>
+  <div class="location-table">
+    <table mat-table [dataSource]="sourceList" class="mat-elevation-z8">
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+        <td mat-cell *matCellDef="let location" class="location-key-link">
+          {{ location[column] }}
+        </td>
+        <!-- <td
+          mat-cell
+          *ngIf="column === 'edit'"
+          *matCellDef="let location"
+          class="location-key-link"
+        >
+          <button type="button">Edit</button>
+        </td> -->
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+  <div class="location-field-form">
+    <div *ngIf="animal">
+      You chose: <i>{{ animal }}</i>
+    </div>
+
+    <!-- <form
+      *ngIf="locationFieldAction === 'add'"
+      [formGroup]="locationFieldForm"
+      (ngSubmit)="onSubmit(locationFieldForm)"
+    >
+      <div class="country-section">
+        <mat-form-field class="name-field" appearance="fill">
+          <mat-label>Name</mat-label>
+          <input
+            type="text"
+            name="name"
+            key="name"
+            matInput
+            formControlName="name"
+            placeholder="India"
+          />
+          <mat-error
+            *ngIf="locationFieldForm.get('name')!.hasError('required')"
+          >
+            Name is required filed
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="code-field" appearance="fill">
+          <mat-label>Code</mat-label>
+          <input
+            type="text"
+            name="code"
+            key="code"
+            matInput
+            formControlName="code"
+            placeholder="IN"
+          />
+          <mat-error
+            *ngIf="locationFieldForm.get('code')!.hasError('required')"
+          >
+            Code is required filed
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="submit-button-section">
+        <button
+          class="btn-checkout"
+          mat-raised-button
+          color="primary"
+          [disabled]="!locationFieldForm.value"
+        >
+          Submit
+        </button>
+      </div>
+    </form> -->
+  </div>
+</div>

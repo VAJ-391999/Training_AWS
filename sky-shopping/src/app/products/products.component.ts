@@ -16,6 +16,7 @@ import {
   Observable,
   pluck,
   Subscription,
+  switchMap,
 } from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
 import { UserTokenPayload } from '../shared/types/auth';
@@ -43,15 +44,12 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
     const formValue = this.searchForm.valueChanges;
     formValue
       ?.pipe(
-        // map((data) => data.productSearch)
         pluck('productSearch'),
-        debounceTime(5000),
+        debounceTime(2000),
         distinctUntilChanged(),
-        concatMap((data) => data)
+        switchMap((data) => this.searchProduct(data))
       )
-      .subscribe((res) => {
-        console.log(res);
-      });
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -73,5 +71,19 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
         edit: false,
       },
     });
+  };
+
+  searchProduct = (searchTerm: string) => {
+    if (searchTerm === '') {
+      this.productService.getProducts().subscribe((data) => {
+        this.products = data.data;
+      });
+    } else {
+      this.products = this.products.filter((prod) =>
+        prod.name.toLocaleLowerCase().includes(searchTerm)
+      );
+    }
+
+    return searchTerm;
   };
 }
