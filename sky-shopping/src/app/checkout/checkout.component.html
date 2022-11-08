@@ -152,7 +152,8 @@
                 {{ paymentMethod }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="orderForm.get('postalCode')!.hasError('required')"
+            <mat-error
+              *ngIf="orderForm.get('paymentMethod')!.hasError('required')"
               >Payment method is required</mat-error
             >
           </mat-form-field>

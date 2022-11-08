@@ -1,13 +1,54 @@
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="data.animal" />
-  </mat-form-field>
+  <p>{{ data.isEdit ? "Edit" : "Add" }} {{ data.locationField }}</p>
+  <div class="location-form" *ngIf="!loading">
+    <form
+      [formGroup]="locationFieldForm"
+      (ngSubmit)="onSubmit(locationFieldForm)"
+    >
+      <div *ngFor="let form_elem of formTemplate">
+        <div [ngSwitch]="form_elem.type">
+          <div *ngSwitchCase="'textBox'">
+            <mat-form-field appearance="fill">
+              <mat-label>{{ form_elem.label }}</mat-label>
+              <input matInput formControlName="{{ form_elem.label }}" />
+            </mat-form-field>
+          </div>
+          <div *ngSwitchCase="'select'">
+            <mat-form-field appearance="fill">
+              <mat-label>{{ form_elem.label }}</mat-label>
+              <mat-select formControlName="{{ form_elem.label }}" required>
+                <mat-option
+                  *ngFor="let option of form_elem.options"
+                  [value]="option"
+                >
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button
+          class="btn-blue"
+          mat-raised-button
+          color="primary"
+          [disabled]="!locationFieldForm.valid"
+        >
+          Save {{ data.locationField }}
+        </button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="loading">
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="!loading && errorMessage !== ''">
+    <p>{{ errorMessage }}</p>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>
-    Ok
-  </button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

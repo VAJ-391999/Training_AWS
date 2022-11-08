@@ -3,15 +3,16 @@ import {
   AngularFireDatabase,
   AngularFireList,
 } from '@angular/fire/compat/database';
-import { BehaviorSubject, map, Observable, toArray } from 'rxjs';
+import { map } from 'rxjs';
 import {
   City,
   Country,
   District,
   LocationField,
-  RetrieveLocation,
   State,
 } from 'src/app/shared/common/location';
+import { Address } from 'src/app/shared/common/location';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ManageLocationService {
@@ -49,27 +50,55 @@ export class ManageLocationService {
     }
   };
 
-  createCounty = (locationField: string, newLocation: any): any => {
+  createLocation = (
+    locationField: LocationField,
+    newLocation: Address
+  ): any => {
+    const address = _.pickBy(newLocation, _.identity);
+    console.log(address);
     switch (locationField) {
-      case LocationField.COUNTRY.toLocaleLowerCase():
-        return this.countryListRef.push(newLocation);
-      case LocationField.STATE.toLocaleLowerCase():
-        return this.stateListRef.push(newLocation);
-      case LocationField.DISTRICT.toLocaleLowerCase():
-        return this.districtRef.push(newLocation);
-      case LocationField.CITY.toLocaleLowerCase():
-        return this.cityRef.push(newLocation);
+      case LocationField.COUNTRY:
+        return this.countryListRef.push(address as Country);
+      case LocationField.STATE:
+        return this.stateListRef.push(address as State);
+      case LocationField.DISTRICT:
+        return this.districtRef.push(address as District);
+      case LocationField.CITY:
+        return this.cityRef.push(address as City);
       default:
         return;
     }
   };
 
-  updateCountry(key: string, value: any): Promise<void> {
-    return this.countryListRef.update(key, value);
+  updateLocation(
+    key: string,
+    value: any,
+    locationField: LocationField
+  ): Promise<void> {
+    const updatedAddress = _.pickBy(value, _.identity);
+    switch (locationField) {
+      case LocationField.COUNTRY:
+        return this.countryListRef.update(key, updatedAddress);
+      case LocationField.STATE:
+        return this.stateListRef.update(key, updatedAddress);
+      case LocationField.DISTRICT:
+        return this.districtRef.update(key, updatedAddress);
+      case LocationField.CITY:
+        return this.cityRef.update(key, updatedAddress);
+    }
   }
 
-  deleteCountry(key: string): Promise<void> {
-    return this.countryListRef.remove(key);
+  deleteLocation(key: string, locationField: LocationField): Promise<void> {
+    switch (locationField) {
+      case LocationField.COUNTRY:
+        return this.countryListRef.remove(key);
+      case LocationField.STATE:
+        return this.stateListRef.remove(key);
+      case LocationField.DISTRICT:
+        return this.districtRef.remove(key);
+      case LocationField.CITY:
+        return this.cityRef.remove(key);
+    }
   }
 
   retrieveLocation(location: string): any {

@@ -11,8 +11,8 @@ export const locationFieldAction = ['Add', 'Edit', 'Delete'];
 
 export interface LocationTimeStamp {
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export interface Country extends LocationTimeStamp {
@@ -22,6 +22,8 @@ export interface Country extends LocationTimeStamp {
 export interface State extends LocationTimeStamp {
   country: string;
 }
+
+export type Address = Country | State | District | City;
 
 export interface District extends LocationTimeStamp {
   country: string;

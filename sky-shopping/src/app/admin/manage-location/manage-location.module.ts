@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { LocationFormComponent } from './location-form/location-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,
     MatTableModule,
     MatDialogModule,
+    MatIconModule,
   ],
   declarations: [ManageLocationComponent, LocationFormComponent],
   exports: [ReactiveFormsModule, FormsModule],

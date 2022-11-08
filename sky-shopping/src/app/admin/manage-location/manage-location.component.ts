@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Address } from '../../shared/common/location';
 import { LocationField, locationFields } from 'src/app/shared/common/location';
 import { LocationFormComponent } from './location-form/location-form.component';
 import { ManageLocationService } from './manage-location.service';
+import * as _ from 'lodash';
 
 export interface DialogData {
-  animal: string;
+  locationField: LocationField;
+  address: Address;
+  isEdit: boolean;
 }
 
 @Component({
@@ -18,20 +22,26 @@ export interface DialogData {
   ],
 })
 export class ManageLocationComponent implements OnInit {
-  locationFieldForm!: FormGroup;
   locationFieldList: string[] = locationFields;
-  locationFieldValue: string = 'Country';
+  locationFieldValue = LocationField.COUNTRY;
   locationFieldAction: string = '';
+  isEditLocation: boolean = false;
 
   sourceList!: any[];
-  commonColumns: string[] = ['key', 'name', 'createdAt', 'updatedAt'];
+  commonColumns: string[] = [
+    'key',
+    'name',
+    'createdAt',
+    'updatedAt',
+    'edit',
+    'delete',
+  ];
   columns: string[] = [];
-  animal!: string;
+  address!: Address;
 
   locationFieldInfo!: any;
 
   constructor(
-    private readonly formBuilder: FormBuilder,
     private readonly manageLocationService: ManageLocationService,
     public dialog: MatDialog
   ) {}
@@ -41,17 +51,27 @@ export class ManageLocationComponent implements OnInit {
   }
 
   onInit = () => {
-    this.columns.push(...this.commonColumns, 'code');
+    this.setColumns('code');
     this.manageLocationService.retrieveLocation('country').subscribe({
       next: (data: any) => {
         console.log(data);
-        this.sourceList = data;
+        if (data.length > 0) {
+          this.sourceList = data.map((value: any) => {
+            return {
+              ...value,
+              createdAt: new Date(value.createdAt).toISOString().slice(0, 10),
+              updatedAt: new Date(value.updatedAt).toISOString().slice(0, 10),
+            };
+          });
+        } else {
+          this.sourceList = data;
+        }
       },
     });
   };
 
   locationFieldChange = (value: string) => {
-    this.locationFieldValue = value;
+    this.locationFieldValue = value as LocationField;
     switch (this.locationFieldValue) {
       case LocationField.COUNTRY:
         this.setCountry();
@@ -72,56 +92,31 @@ export class ManageLocationComponent implements OnInit {
     }
   };
 
-  onSubmit = (form: FormGroup) => {
-    console.log('form', form);
-    // this.manageLocationService.createCounty({
-    //   name: form.value.name,
-    //   code: form.value.code,
-    //   createdAt: new Date(),
-    //   updatedAt: new Date(),
-    // });
-    // console.log(this.manageLocationService.retrieveCountry());
-  };
-
   setCountry = () => {
     this.removeColumns();
-    this.columns.push(...this.commonColumns, 'code');
+    this.setColumns('code');
     this.manageLocationService.retrieveLocation('country').subscribe({
       next: (data: any) => {
         console.log(data);
         this.sourceList = data;
       },
     });
-    this.locationFieldForm = this.formBuilder.group({
-      locationField: [`${this.locationFieldValue}`, [Validators.required]],
-      name: ['', [Validators.required]],
-      code: ['', [Validators.required]],
-    });
   };
 
   setState = () => {
     this.removeColumns();
-    this.columns.push(
-      ...this.commonColumns,
-      LocationField.COUNTRY.toLocaleLowerCase()
-    );
+    this.setColumns(LocationField.COUNTRY.toLocaleLowerCase());
     this.manageLocationService.retrieveLocation('state').subscribe({
       next: (data: any) => {
         console.log(data);
         this.sourceList = data;
       },
     });
-    this.locationFieldForm = this.formBuilder.group({
-      locationField: [`${this.locationFieldValue}`, [Validators.required]],
-      name: ['', [Validators.required]],
-      country: ['', [Validators.required]],
-    });
   };
 
   setDistrict = () => {
     this.removeColumns();
-    this.columns.push(
-      ...this.commonColumns,
+    this.setColumns(
       LocationField.COUNTRY.toLocaleLowerCase(),
       LocationField.STATE.toLocaleLowerCase()
     );
@@ -131,33 +126,20 @@ export class ManageLocationComponent implements OnInit {
         this.sourceList = data;
       },
     });
-    this.locationFieldForm = this.formBuilder.group({
-      locationField: [`${this.locationFieldValue}`, [Validators.required]],
-      name: ['', [Validators.required]],
-      country: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-    });
   };
 
   setCity = () => {
     this.removeColumns();
-    this.columns.push(
-      ...this.commonColumns,
+    this.setColumns(
       LocationField.COUNTRY.toLocaleLowerCase(),
       LocationField.STATE.toLocaleLowerCase(),
       LocationField.DISTRICT.toLocaleLowerCase()
     );
-    this.manageLocationService.retrieveLocation('district').subscribe({
+    this.manageLocationService.retrieveLocation('city').subscribe({
       next: (data: any) => {
         console.log(data);
         this.sourceList = data;
       },
-    });
-    this.locationFieldForm = this.formBuilder.group({
-      locationField: [`${this.locationFieldValue}`, [Validators.required]],
-      name: ['', [Validators.required]],
-      country: ['', [Validators.required]],
-      state: ['', [Validators.required]],
     });
   };
 
@@ -165,15 +147,83 @@ export class ManageLocationComponent implements OnInit {
     this.columns = [];
   };
 
-  openDialog(): void {
+  openDialog(key?: string): void {
+    let address;
+    if (this.isEditLocation) {
+      const element = this.sourceList.find((item) => item.key === key);
+      switch (this.locationFieldValue) {
+        case LocationField.COUNTRY:
+          address = {
+            code: element.code,
+            name: element.name,
+          };
+          break;
+        case LocationField.STATE:
+          address = {
+            name: element.name,
+            country: element.country,
+          };
+          break;
+        case LocationField.DISTRICT:
+          address = {
+            name: element.name,
+            country: element.country,
+            state: element.state,
+          };
+          break;
+        case LocationField.CITY:
+          address = {
+            name: element.name,
+            country: element.country,
+            state: element.state,
+            district: element.district,
+          };
+          break;
+      }
+    } else {
+      address = this.address;
+    }
     const dialogRef = this.dialog.open(LocationFormComponent, {
       width: '250px',
-      data: { animal: this.animal },
+      data: {
+        locationField: this.locationFieldValue,
+        address: address,
+        isEdit: this.isEditLocation,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      console.log('The dialog was closed', result);
+      if (result !== undefined) {
+        if (this.isEditLocation && key) {
+          this.manageLocationService.updateLocation(
+            key,
+            _.omit(result.address, ['createdAt']),
+            result.locationField
+          );
+        } else {
+          this.manageLocationService.createLocation(result.locationField, {
+            ...result.address,
+          });
+        }
+      }
     });
   }
+
+  setColumns = (...newColumns: string[]) => {
+    this.columns.push(...this.commonColumns);
+    this.columns.splice(2, 0, ...newColumns);
+  };
+
+  onDeleteLocation = async (key: string) => {
+    await this.manageLocationService.deleteLocation(
+      key,
+      this.locationFieldValue
+    );
+  };
+
+  onEditLocation = (key: string) => {
+    this.isEditLocation = true;
+    this.openDialog(key);
+  };
 }

@@ -58,3 +58,8 @@ mat-radio-group {
 .location-info {
   margin-bottom: 30px;
 }
+
+.action-link:hover,
+.btn-blue:hover {
+  cursor: pointer;
+}
