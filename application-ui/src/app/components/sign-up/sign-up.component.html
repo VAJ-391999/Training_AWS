@@ -1,0 +1,42 @@
+<div class="display-table">
+  <div class="display-table-cell">
+    <div class="authBlock">
+      <h3>Sign Up</h3>
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Email Address"
+          #userEmail
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          #userPwd
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="button"
+          class="btn btn-primary"
+          value="Sign Up"
+          (click)="authService.signUp(userEmail.value, userPwd.value)"
+        />
+      </div>
+      <div class="form-group">
+        <span class="or"><span class="orInner">Or</span></span>
+      </div>
+    </div>
+    <div class="redirectToLogin">
+      <span
+        >Already have an account?
+        <span class="redirect" routerLink="/sign-in">Log In</span></span
+      >
+    </div>
+  </div>
+</div>
