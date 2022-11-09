@@ -32,6 +32,7 @@ import {
   IAuthState,
 } from './shared/redux/auth.store';
 import { ManageLocationService } from './admin/manage-location/manage-location.service';
+import { ExponentialStrengthPipe } from './shared/pipes/exponential-strength.pipe';
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [

@@ -5,4 +5,18 @@
       <li>{{ video }}</li>
     </ul>
   </div>
+  <div class="pipe-exponential">
+    <h2>Power booster</h2>
+    <input type="text" placeholder="Enter value" [(ngModel)]="value" />
+    <input type="text" placeholder="Enter power" [(ngModel)]="power" />
+    <p>super power boost: {{ value | exponentialStrength: power }}</p>
+  </div>
+  <div class="test-array">
+    <ul *ngIf="testArray | async as arr">
+      <li *ngFor="let test of arr">
+        {{ test }}
+      </li>
+    </ul>
+  </div>
+  <p>{{ message | async }}</p>
 </div>

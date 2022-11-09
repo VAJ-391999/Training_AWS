@@ -7,6 +7,7 @@ import {
   map,
   concatAll,
   concatMap,
+  Observable,
 } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserTokenPayload } from 'src/app/shared/types/auth';
@@ -20,6 +21,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   recentLoggedInUsersSubscription!: Subscription;
   recentLoggedInUserList: UserTokenPayload[] = [];
   videoStream: string[] = [];
+  value!: number;
+  power!: number;
+  testArray = from(['Tina', 'Mina']);
+  message: Observable<string> = of('Tina');
 
   constructor(private readonly authService: AuthService) {}
 
