@@ -23,8 +23,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   videoStream: string[] = [];
   value!: number;
   power!: number;
-  testArray = from(['Tina', 'Mina']);
   message: Observable<string> = of('Tina');
+
+  users = [
+    { id: 1, name: 'A' },
+    { id: 2, name: 'B' },
+    { id: 3, name: 'C' },
+  ];
 
   constructor(private readonly authService: AuthService) {}
 
@@ -64,5 +69,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getData = (channelName: any) => {
     return of(channelName);
+  };
+
+  refresh = () => {
+    this.users = [
+      { id: 1, name: 'A' },
+      { id: 2, name: 'B' },
+      { id: 4, name: 'D' },
+    ];
+  };
+
+  trackByUser = (index: number, item: any) => {
+    return item.id;
   };
 }

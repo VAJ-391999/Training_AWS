@@ -1,0 +1,11 @@
+<div class="chart">
+  <ng-content></ng-content>
+  <ng-content select="[chartList]"></ng-content>
+  <ng-content select=".test"></ng-content>
+
+  True:
+  <div *ngIf="true; else elseBlock">Condition is true</div>
+  False:
+  <div *ngIf="false; else elseBlock">Condition is true</div>
+  <ng-template #elseBlock>Condition is false</ng-template>
+</div>

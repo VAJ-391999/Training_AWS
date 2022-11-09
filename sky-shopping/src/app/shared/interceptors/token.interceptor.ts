@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, retry } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import {
   HttpRequest,
@@ -34,6 +34,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       });
     }
     return next.handle(request).pipe(
+      retry(1),
       catchError((err) => {
         console.log(err);
         if (err.status === 401) {

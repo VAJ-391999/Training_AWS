@@ -7,9 +7,10 @@ import { ProductModule } from '../products/products.module';
 import { ManageLocationModule } from './manage-location/manage-location.module';
 import { ExponentialStrengthPipe } from '../shared/pipes/exponential-strength.pipe';
 import { FormsModule } from '@angular/forms';
+import { ChartComponent } from './dashboard/chart/chart.component';
 
 @NgModule({
-  declarations: [AdminComponent, DashboardComponent, ExponentialStrengthPipe],
+  declarations: [AdminComponent, DashboardComponent, ExponentialStrengthPipe, ChartComponent],
   imports: [
     AdminRoutingModule,
     SharedModule,

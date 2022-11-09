@@ -1,5 +1,10 @@
 <div class="dashboard">
   <div class="dashboard-title">Recent LoggedIn Users</div>
+  <app-chart>
+    <p>Chart</p>
+    <p chartList>List</p>
+    <p class="test">Test</p>
+  </app-chart>
   <div class="user-list">
     <ul *ngFor="let video of videoStream">
       <li>{{ video }}</li>
@@ -11,12 +16,11 @@
     <input type="text" placeholder="Enter power" [(ngModel)]="power" />
     <p>super power boost: {{ value | exponentialStrength: power }}</p>
   </div>
-  <div class="test-array">
-    <ul *ngIf="testArray | async as arr">
-      <li *ngFor="let test of arr">
-        {{ test }}
-      </li>
+  <div>
+    <button (click)="refresh()">Refresh</button>
+    <ul>
+      <li *ngFor="let user of users; trackBy: trackByUser">{{ user.name }}</li>
     </ul>
   </div>
-  <p>{{ message | async }}</p>
+  <p>Async pipe: {{ message | async }}</p>
 </div>

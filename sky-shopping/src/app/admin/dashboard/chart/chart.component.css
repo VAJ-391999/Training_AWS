@@ -1,0 +1,9 @@
+.chart {
+  box-shadow: 2px 2px 2px 2px gray;
+  padding: 30px;
+}
+
+.chart p {
+  font-size: 20px;
+  color: #1e2b58;
+}
