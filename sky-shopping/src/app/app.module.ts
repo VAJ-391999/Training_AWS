@@ -45,9 +45,7 @@ import { ExponentialStrengthPipe } from './shared/pipes/exponential-strength.pip
     StoreModule.forRoot({ loader: reducer }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    NgxStripeModule.forRoot(
-      'pk_test_51LzCIiSB37q7uKsrbbgSroYRyjLgj6QoKjozfcGrgMjsl7B7NBi8kxKYHlcI2ybV0BIy7YAAQDpzW8WUozUGk41I00SRCOaD5h'
-    ),
+    NgxStripeModule.forRoot('pk_test_XXXX'),
     NgReduxModule,
   ],
   providers: [
