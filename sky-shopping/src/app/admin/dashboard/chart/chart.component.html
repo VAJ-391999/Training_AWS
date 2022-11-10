@@ -8,4 +8,11 @@
   False:
   <div *ngIf="false; else elseBlock">Condition is true</div>
   <ng-template #elseBlock>Condition is false</ng-template>
+  <div class="memorization">
+    <h1>{{ getTitle(framework) }}</h1>
+    <button (click)="changeFramework()">Change Framework</button>
+
+    <h3>Count: {{ count }}</h3>
+    <button (click)="increaseCount()">Increase Count</button>
+  </div>
 </div>
