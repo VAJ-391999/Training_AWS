@@ -1,4 +1,5 @@
 import { APIGatewayEvent, Callback, Context } from "aws-lambda";
+import { CartService } from "../../core/cart/service/cart.service";
 import { MongoDb } from "../../core/common/db";
 import { HttpError } from "../../core/common/httpError";
 import { responseHandler } from "../../core/common/responseHandler";
@@ -24,10 +25,15 @@ export const handler = async (
   }
 
   const userService = new UserService(db);
+  const cartService = new CartService(db);
   let response;
 
   try {
     const newUser = await userService.createUser(user);
+    console.log("newUser", newUser);
+    if (newUser) {
+      await cartService.addBlankCart(newUser._id);
+    }
     response = responseHandler(false, {
       statusCode: 200,
       message: "Successfully create new User",

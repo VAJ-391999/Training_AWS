@@ -35,6 +35,7 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
   role!: string;
   userId!: string;
   @select('user') user!: Observable<UserTokenPayload>;
+  searchSubscription!: Subscription;
 
   constructor(
     private readonly productService: ProductService,
@@ -42,18 +43,21 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
   ngAfterViewInit(): void {
     const formValue = this.searchForm.valueChanges;
-    formValue
-      ?.pipe(
-        pluck('productSearch'),
-        debounceTime(2000),
-        distinctUntilChanged(),
-        switchMap((data) => this.searchProduct(data))
-      )
-      .subscribe();
+    if (formValue) {
+      this.searchSubscription = formValue
+        ?.pipe(
+          pluck('productSearch'),
+          debounceTime(2000),
+          distinctUntilChanged(),
+          switchMap((data) => this.searchProduct(data))
+        )
+        .subscribe();
+    }
   }
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+    this.searchSubscription.unsubscribe();
   }
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data) => {

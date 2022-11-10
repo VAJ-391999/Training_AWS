@@ -29,6 +29,7 @@ export class ComparePasswordValidator implements Validator {
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
+    console.log('VAlidator');
     // self value (e.g. retype password)
     let v = control.value;
     // control value (e.g. password)

@@ -85,7 +85,7 @@ export class OrderService {
     const foundOrder: Order = await this.orderRepository.getOrderDetail(
       orderId
     );
-
+    console.log("Order", foundOrder);
     if (!foundOrder) {
       throw new HttpError({
         statusCode: 404,

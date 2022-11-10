@@ -149,4 +149,18 @@ export class CartService {
       totalPrice: 0,
     });
   };
+
+  addBlankCart = async (userId: mongoose.Types.ObjectId) => {
+    console.log("addBlank cart", userId);
+    try {
+      const createdCart = await this.cartRepository.addToCart({
+        user: userId,
+        items: [],
+        totalPrice: 0,
+      });
+      console.log("Create blank cart", createdCart);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 }

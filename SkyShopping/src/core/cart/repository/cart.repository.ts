@@ -10,7 +10,12 @@ export class CartRepository {
   }
 
   addToCart = (cart: CartInfo) => {
-    return this.cartModel.create(cart);
+    console.log("new cart", cart);
+    return this.cartModel.create({
+      user: cart.user,
+      items: cart.items,
+      totalPrice: cart.totalPrice,
+    });
   };
 
   findCartByUserId = (userId: mongoose.Types.ObjectId) => {

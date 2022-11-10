@@ -36,12 +36,12 @@ export class OrderAddress {
   postalCode: string;
 }
 
-@modelOptions({
-  schemaOptions: {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  },
-})
+// @modelOptions({
+//   schemaOptions: {
+//     toJSON: { virtuals: true },
+//     toObject: { virtuals: true },
+//   },
+// })
 export class Order extends TimeStamps implements Base {
   _id: Types.ObjectId;
   id: string;

@@ -22,7 +22,7 @@ export class Cart extends TimeStamps implements Base {
   _id: Types.ObjectId;
   id: string;
 
-  @Prop({ unique: true, ref: () => User })
+  @Prop({ ref: () => User })
   user: Ref<User>;
 
   @Prop()

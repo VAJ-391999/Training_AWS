@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:chart": "ng test --include=src\\app\\admin\\dashboard\\chart\\chart.component.ts",
+    "test:product": "ng test --include=src\\app\\products\\products.component.spec.ts",
+    "test:login": "ng test --include=src\\app\\login\\login.component.spec.ts"
   },
   "private": true,
   "dependencies": {

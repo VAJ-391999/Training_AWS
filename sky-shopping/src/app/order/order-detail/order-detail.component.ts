@@ -21,6 +21,7 @@ export class OrderDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('order', this.order);
     this.activatedRoute.params.subscribe((params) => {
       this.orderId = params['orderId'];
       console.log(this.orderId);
