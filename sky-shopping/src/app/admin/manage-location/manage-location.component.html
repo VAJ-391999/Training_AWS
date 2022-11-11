@@ -9,7 +9,10 @@
     >
       <mat-radio-button
         [value]="locationField"
-        *ngFor="let locationField of locationFieldList"
+        *ngFor="
+          let locationField of locationFieldList;
+          trackBy: trackLocationField
+        "
         >{{ locationField }}</mat-radio-button
       >
     </mat-radio-group>

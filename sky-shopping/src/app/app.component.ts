@@ -15,7 +15,9 @@ export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated!: boolean;
   @select('isAuthenticated') authStore!: Observable<boolean>;
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {
+    console.log('App constructor');
+  }
   ngOnDestroy(): void {
     this.authSubscription.unsubscribe();
   }

@@ -226,4 +226,8 @@ export class ManageLocationComponent implements OnInit {
     this.isEditLocation = true;
     this.openDialog(key);
   };
+
+  trackLocationField = (index: number, locationField: any) => {
+    locationField.key;
+  };
 }

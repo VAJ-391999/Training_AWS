@@ -18,7 +18,7 @@ export class ProductService {
         take(1),
         map((res) => {
           console.log('res', res);
-          this.products.next(res.data);
+          // this.products.next(res.data);
           return res;
         })
       );

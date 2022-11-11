@@ -1,4 +1,6 @@
+import { NgReduxModule } from '@angular-redux/store';
 import {
+  MockNgRedux,
   MockObservableStore,
   NgReduxTestingModule,
 } from '@angular-redux/store/testing';
@@ -16,13 +18,21 @@ import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
   let authServiceMock: AuthService;
-  let reduxStoreMock: MockObservableStore<IAuthState>;
+  let reduxStoreMock: MockNgRedux<IAuthState>;
   let storeMock: Store<any>;
+  let httpClientMock = jasmine.createSpyObj('HttpClient', ['get']);
+  let routerMock = jasmine.createSpyObj('Router', ['navigate']);
 
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
+    // reduxStoreMock = TestBed.get(MockNgRedux);
+    authServiceMock = new AuthService(
+      httpClientMock,
+      routerMock,
+      reduxStoreMock
+    );
     await TestBed.configureTestingModule({
       imports: [
         SharedModule,
@@ -32,6 +42,7 @@ describe('LoginComponent', () => {
         MatInputModule,
         MatButtonModule,
         MatGridListModule,
+        NgReduxModule,
       ],
       declarations: [LoginComponent],
       providers: [
@@ -40,7 +51,7 @@ describe('LoginComponent', () => {
           useValue: authServiceMock,
         },
         {
-          provide: MockObservableStore,
+          provide: MockNgRedux,
           useValue: reduxStoreMock,
         },
         {
@@ -53,10 +64,14 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    spyOn(authServiceMock, 'isLoggedIn').and.returnValue(false);
+    reduxStoreMock = TestBed.get(MockNgRedux);
+
+    // authServiceMock.isLoggedIn.and.returnValue(false);
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    // expect(component).toBeTruthy();
+    spyOn(reduxStoreMock, 'dispatch').and.returnValue({});
+    expect(authServiceMock.isLoggedIn).toEqual(false);
   });
 });

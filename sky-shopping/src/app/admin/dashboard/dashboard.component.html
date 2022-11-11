@@ -1,7 +1,13 @@
 <div class="dashboard">
   <div class="dashboard-title">Recent LoggedIn Users</div>
-  <app-chart>
-    <p>Chart</p>
+  <input type="text" [(ngModel)]="chartTitle" placeholder="Enter chart title" />
+  <app-chart #chart1>
+    <p>{{ chartTitle }}</p>
+    <p chartList>List</p>
+    <p class="test">Test</p>
+  </app-chart>
+  <app-chart #chart2>
+    <p>{{ chartTitle }}</p>
     <p chartList>List</p>
     <p class="test">Test</p>
   </app-chart>
@@ -23,4 +29,12 @@
     </ul>
   </div>
   <p>Async pipe: {{ message | async }}</p>
+  <div class="subject-list">
+    <h1>Subject List:</h1>
+    <button (click)="changeSubject('behaviorSubject')">Behavior Subject</button>
+    <button (click)="changeSubject('replaySubject')">Replay Subject</button>
+    <ul>
+      <li *ngFor="let user of userList">{{ user.name }}</li>
+    </ul>
+  </div>
 </div>
