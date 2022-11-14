@@ -12,7 +12,8 @@
     "test:login": "ng test --include=src\\app\\login\\login.component.spec.ts",
     "test:services": "ng test --include=src\\app\\**\\**\\*.service.spec.ts",
     "test:home": "ng test --include=src\\app\\home\\home.component.spec.ts",
-    "test:header": "ng test --include=src\\app\\header\\header.component.spec.ts"
+    "test:header": "ng test --include=src\\app\\header\\header.component.spec.ts",
+    "test:loader": "ng test --include=src\\app\\loader\\loader.component.spec.ts"
   },
   "private": true,
   "dependencies": {

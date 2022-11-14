@@ -7,6 +7,10 @@ export interface ActionType {
   type: string;
 }
 
+export type LoaderState = {
+  isOn: boolean;
+};
+
 export function reducer(state = { isOn: false }, action: ActionType) {
   switch (action.type) {
     case LoaderAction.START: {
