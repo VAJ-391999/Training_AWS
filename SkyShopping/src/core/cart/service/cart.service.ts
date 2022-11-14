@@ -6,6 +6,7 @@ import { Cart } from "../model/cart";
 import { CartAction } from "../../type/cart/item";
 import { CartRepository } from "../repository/cart.repository";
 import { CartInfo } from "../../type/cart/cart";
+import { GetCartResponseDTO } from "../validators/getCartResponse.dto";
 
 export class CartService {
   cartRepository: CartRepository;
@@ -112,34 +113,57 @@ export class CartService {
     }
   };
 
-  getCartDetail = async (userId: mongoose.Types.ObjectId) => {
-    let foundCart = await this.cartRepository.findCartByUserId(userId);
-    console.log("cart", JSON.stringify(foundCart));
+  getCartDetail = async (
+    userId: mongoose.Types.ObjectId
+  ): Promise<GetCartResponseDTO> => {
+    try {
+      let foundCart: Cart = await this.cartRepository.findCartByUserId(userId);
+      console.log("cart", JSON.stringify(foundCart));
 
-    if (!foundCart) {
+      if (!foundCart) {
+        throw new HttpError({
+          statusCode: 404,
+          message: "Cart not found",
+          data: null,
+        });
+      }
+
+      let calculatedTotalPrice: number = 0;
+      let cartContainDeletedProduct: boolean = false;
+      let catTotalPriceUpdated: boolean = false;
+
+      foundCart.items.forEach((item: any) => {
+        if (item.product !== null) {
+          calculatedTotalPrice =
+            calculatedTotalPrice + item.product.unitPrice * item.quantity;
+        } else {
+          cartContainDeletedProduct = true;
+        }
+      });
+
+      if (foundCart.totalPrice !== calculatedTotalPrice) {
+        catTotalPriceUpdated = true;
+        foundCart = this.cartRepository.updateCart({
+          user: userId,
+          items: cartContainDeletedProduct
+            ? foundCart.items.filter((item: any) => item.product !== null)
+            : foundCart.items,
+          totalPrice: calculatedTotalPrice,
+        });
+      }
+
+      return {
+        cart: foundCart,
+        cartItemUpdated:
+          cartContainDeletedProduct || catTotalPriceUpdated ? true : false,
+      };
+    } catch (error) {
       throw new HttpError({
-        statusCode: 404,
-        message: "Cart not found",
+        statusCode: 400,
+        message: error.message,
         data: null,
       });
     }
-
-    let calculatedTotalPrice: number = 0;
-
-    foundCart.items.forEach((item: any) => {
-      calculatedTotalPrice =
-        calculatedTotalPrice + item.product.unitPrice * item.quantity;
-    });
-
-    if (foundCart.totalPrice !== calculatedTotalPrice) {
-      foundCart = this.cartRepository.updateCart({
-        user: foundCart.user,
-        items: foundCart.items,
-        totalPrice: calculatedTotalPrice,
-      });
-    }
-
-    return foundCart;
   };
 
   removeCart = async (userId: mongoose.Types.ObjectId) => {

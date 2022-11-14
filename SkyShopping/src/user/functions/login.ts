@@ -49,5 +49,6 @@ export const handler = async (
     }
   }
   console.log("response", response);
+  db.closeDbConnection();
   callback(null, response);
 };

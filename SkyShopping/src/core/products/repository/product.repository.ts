@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { ProductDetailToUpdate } from "../../type/product/product-detail-to-update";
+import { Product } from "../model/product";
 import { CreateProductRequestDTO } from "../validators/createProductRequest.dto";
 
 export class ProductRepository {
@@ -17,7 +18,7 @@ export class ProductRepository {
     return this.productModel.create(product);
   };
 
-  getProductDetail = (id: mongoose.Types.ObjectId) => {
+  getProductDetail = (id: mongoose.Types.ObjectId): Promise<Product> => {
     return this.productModel.findOne({ _id: id });
   };
 

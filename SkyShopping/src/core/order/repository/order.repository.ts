@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { Product } from "../../products/model/product";
 import { OrderInfo } from "../../type/order/order";
 
 export class OrderRepository {
@@ -17,13 +16,6 @@ export class OrderRepository {
   };
 
   getOrderDetail = (orderId: mongoose.Types.ObjectId) => {
-    return this.orderModel
-      .findOne({ _id: orderId })
-      .lean()
-      .populate({
-        path: "orderItems.product",
-        model: Product,
-      })
-      .exec();
+    return this.orderModel.findOne({ _id: orderId }).exec();
   };
 }

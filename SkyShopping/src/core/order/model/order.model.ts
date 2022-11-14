@@ -1,4 +1,4 @@
-import { modelOptions, Prop, Ref } from "@typegoose/typegoose";
+import { Prop, Ref } from "@typegoose/typegoose";
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Types } from "mongoose";
 import { Product } from "../../products/model/product";

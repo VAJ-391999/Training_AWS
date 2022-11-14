@@ -13,7 +13,11 @@ export class ProductService {
   }
 
   createProduct = async (product: CreateProductRequestDTO) => {
-    return await this.productRepository.createProduct(product);
+    try {
+      return await this.productRepository.createProduct(product);
+    } catch (error) {
+      throw error;
+    }
   };
 
   getProductList = async () => {

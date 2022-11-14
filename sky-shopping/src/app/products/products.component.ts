@@ -56,16 +56,16 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
-    // this.searchSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.searchSubscription.unsubscribe();
   }
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data) => {
       this.products = data.data;
-      // this.userSubscription = this.user.subscribe((userDetail) => {
-      //   (this.role = userDetail ? userDetail.role : ''),
-      //     (this.userId = userDetail ? userDetail.id : '');
-      // });
+      this.userSubscription = this.user.subscribe((userDetail) => {
+        (this.role = userDetail ? userDetail.role : ''),
+          (this.userId = userDetail ? userDetail.id : '');
+      });
     });
   }
 

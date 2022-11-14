@@ -9,21 +9,30 @@ import { StripePayment } from "../../common/stripe";
 import mongoose from "mongoose";
 import { Order } from "../model/order.model";
 import { HttpError } from "../../common/httpError";
+import { ProductService } from "../../products/service/product.service";
 
 export class OrderService {
   private readonly orderRepository: OrderRepository;
+  private readonly productService: ProductService;
   constructor(db: MongoDb) {
     this.orderRepository = new OrderRepository(db.orderModel);
+    this.productService = new ProductService(db);
   }
 
   createOrder = async (newOrderDetails: CreateOrderRequestDTO) => {
     try {
-      const orderItems = newOrderDetails.orderItems.map((item) => {
-        return {
-          ...item,
-          product: validateObjectId(item.product),
-        };
-      });
+      const orderItems = await Promise.all(
+        newOrderDetails.orderItems.map(async (item) => {
+          return {
+            ...item,
+            product: await this.productService.getProductDetail(
+              validateObjectId(item.product)
+            ),
+          };
+        })
+      );
+
+      console.log("orderItems", orderItems);
 
       const orderInfo: OrderInfo = {
         user: validateObjectId(newOrderDetails.user),

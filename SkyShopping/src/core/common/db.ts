@@ -47,4 +47,10 @@ export class MongoDb {
     this.cartModel = getModelForClass(Cart);
     this.orderModel = getModelForClass(Order);
   };
+
+  closeDbConnection = () => {
+    console.log("Database connection close");
+    this.connection = null;
+    mongoose.connection.close();
+  };
 }

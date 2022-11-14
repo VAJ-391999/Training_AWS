@@ -20,3 +20,8 @@ export interface AddToCart {
   productId: string;
   action?: CartAction;
 }
+
+export interface GetCartResponse {
+  cart: Cart;
+  cartItemUpdated: boolean;
+}

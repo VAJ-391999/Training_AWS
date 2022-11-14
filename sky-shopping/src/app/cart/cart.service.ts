@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddToCart, Cart } from '../shared/types/cart';
+import { AddToCart, Cart, GetCartResponse } from '../shared/types/cart';
 import { Response } from '../shared/types/response';
 
 @Injectable()
@@ -18,6 +18,7 @@ export class CartService {
       .pipe(
         take(1),
         map((res) => {
+          console.log('cart res', res);
           if (res.data !== null) {
             this.cart.next(res.data);
           }
@@ -28,12 +29,15 @@ export class CartService {
 
   getCart = (userId: string) => {
     return this.httpClient
-      .post<Response<Cart>>(`${environment.apiBaseUrl}/cart/detail`, { userId })
+      .post<Response<GetCartResponse>>(
+        `${environment.apiBaseUrl}/cart/detail`,
+        { userId }
+      )
       .pipe(
         take(1),
         map((res) => {
           if (res.data !== null) {
-            this.cart.next(res.data);
+            this.cart.next(res.data.cart);
           }
           return res;
         })

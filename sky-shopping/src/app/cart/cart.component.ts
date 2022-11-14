@@ -20,6 +20,7 @@ export class CartComponent implements OnInit, OnDestroy {
   isPriceValid: boolean = false;
   userSubscription!: Subscription;
   @select('user') user!: Observable<UserTokenPayload>;
+  cartItemUpdated: boolean = false;
 
   constructor(
     private readonly cartService: CartService,
@@ -42,7 +43,8 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.getCart(this.userId).subscribe({
       next: (response) => {
         console.log('Get cart', response);
-        this.cart = response.data;
+        this.cart = response.data.cart;
+        this.cartItemUpdated = response.data.cartItemUpdated;
         this.validPrice();
       },
     });

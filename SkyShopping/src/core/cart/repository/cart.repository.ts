@@ -21,24 +21,34 @@ export class CartRepository {
   findCartByUserId = (userId: mongoose.Types.ObjectId) => {
     return this.cartModel
       .findOne({ user: userId })
-      .lean()
       .populate({
         path: "items.product",
         model: Product,
+        options: {
+          retainNullValue: true,
+        },
       })
       .exec();
   };
 
   updateCart = (cart: CartInfo) => {
-    return this.cartModel.findOneAndUpdate(
-      { user: cart.user },
-      {
-        $set: {
-          items: cart.items,
-          totalPrice: cart.totalPrice,
+    return this.cartModel
+      .findOneAndUpdate(
+        { user: cart.user },
+        {
+          $set: {
+            items: cart.items,
+            totalPrice: cart.totalPrice,
+          },
         },
-      },
-      { new: true }
-    );
+        { new: true }
+      )
+      .populate({
+        path: "items.product",
+        model: Product,
+        options: {
+          retainNullValue: true,
+        },
+      });
   };
 }

@@ -1,6 +1,5 @@
 import { Stripe } from "stripe";
 import { config } from "../config/config";
-const stripe = require("stripe")(config.stripe.secretKey);
 
 export class StripePayment {
   stripeInstance: Stripe;
