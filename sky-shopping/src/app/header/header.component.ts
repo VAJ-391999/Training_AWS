@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @select('user') user!: Observable<UserTokenPayload>;
 
   role!: string;
+  userEmail!: string;
   userSubscription!: Subscription;
 
   constructor(private readonly router: Router) {}
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSubscription = this.user.subscribe((response) => {
       console.log('redux user', response);
       this.role = response ? response.role : '';
+      this.userEmail = response ? response.email : '';
     });
   }
 

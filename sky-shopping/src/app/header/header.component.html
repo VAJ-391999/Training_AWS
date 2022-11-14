@@ -1,6 +1,16 @@
 <nav>
   <div class="header">
+    <div class="user-email">
+      <h3>{{ userEmail }}</h3>
+    </div>
     <ul class="header-list">
+      <li
+        class="header-list-item"
+        routerLinkActive="active"
+        *ngIf="role === 'admin'"
+      >
+        <a routerLink="{{ role }}/dashboard"> Dashboard </a>
+      </li>
       <li class="header-list-item" routerLinkActive="active">
         <a routerLink="{{ role }}/products"> Products </a>
       </li>

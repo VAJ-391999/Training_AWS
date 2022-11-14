@@ -142,14 +142,16 @@ export class CartService {
       });
 
       if (foundCart.totalPrice !== calculatedTotalPrice) {
+        console.log("Price not matched");
         catTotalPriceUpdated = true;
-        foundCart = this.cartRepository.updateCart({
+        foundCart = await this.cartRepository.updateCart({
           user: userId,
           items: cartContainDeletedProduct
             ? foundCart.items.filter((item: any) => item.product !== null)
             : foundCart.items,
           totalPrice: calculatedTotalPrice,
         });
+        console.log("updated cart", foundCart);
       }
 
       return {
@@ -158,11 +160,8 @@ export class CartService {
           cartContainDeletedProduct || catTotalPriceUpdated ? true : false,
       };
     } catch (error) {
-      throw new HttpError({
-        statusCode: 400,
-        message: error.message,
-        data: null,
-      });
+      console.log("error", error);
+      throw error;
     }
   };
 

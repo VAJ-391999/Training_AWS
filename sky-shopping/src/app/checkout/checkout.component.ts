@@ -9,7 +9,15 @@ import {
   StripeService,
 } from 'ngx-stripe';
 import { Observable, Subscription } from 'rxjs';
+import { ManageLocationService } from '../admin/manage-location/manage-location.service';
 import { CartService } from '../cart/cart.service';
+import {
+  City,
+  Country,
+  District,
+  LocationField,
+  State,
+} from '../shared/common/location';
 import { paymentMethod } from '../shared/common/payment-method';
 import { UserTokenPayload } from '../shared/types/auth';
 import { CreateOrder } from '../shared/types/order';
@@ -30,6 +38,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   elements!: Elements;
   card!: StripeElement;
   @select('user') user!: Observable<UserTokenPayload>;
+  countryList: string[] = [];
+  stateList: string[] = [];
+  districtList: string[] = [];
+  cityList: string[] = [];
 
   elementsOptions: ElementsOptions = {
     locale: 'en',
@@ -43,7 +55,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private readonly checkoutService: CheckoutService,
     private readonly formBuilder: FormBuilder,
     private readonly stripeService: StripeService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly manageLocationService: ManageLocationService
   ) {}
 
   ngOnDestroy(): void {
@@ -53,6 +66,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onInit();
+    this.initCountry();
   }
 
   cardGenerator = () => {
@@ -98,10 +112,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           Validators.maxLength(20),
         ],
       ],
-      city: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      district: ['', [Validators.required]],
       country: ['', [Validators.required]],
+      state: [{ value: '', disabled: true }, [Validators.required]],
+      district: [{ value: '', disabled: true }, [Validators.required]],
+      city: [{ value: '', disabled: true }, [Validators.required]],
       postalCode: ['', [Validators.required]],
       paymentMethod: ['', [Validators.required]],
       fullName: ['', this.fullNameValidator],
@@ -188,5 +202,80 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['user', 'order']);
       },
     });
+  };
+
+  initCountry = () => {
+    this.manageLocationService
+      .retrieveLocation(LocationField.COUNTRY.toLocaleLowerCase())
+      .subscribe({
+        next: (res: Country[]) => {
+          if (res.length > 0) {
+            this.countryList = res.map((country: Country) => country.name);
+          }
+        },
+      });
+  };
+
+  changeCountry = (countryName: string) => {
+    console.log(countryName);
+    this.orderForm.get('state')!.enable();
+    this.orderForm.controls['state'].setValue('');
+    this.orderForm.controls['district'].setValue('');
+    this.orderForm.controls['city'].setValue('');
+    this.manageLocationService
+      .retrieveLocation(LocationField.STATE.toLocaleLowerCase())
+      .subscribe({
+        next: (res: State[]) => {
+          if (res.length > 0) {
+            this.stateList = res
+              .filter((state: State) => state.country === countryName)
+              .map((stateItem) => stateItem.name);
+          }
+        },
+      });
+  };
+
+  changeState = (stateName: string) => {
+    console.log(stateName);
+    this.orderForm.get('district')!.enable();
+    this.orderForm.controls['district'].setValue('');
+    this.orderForm.controls['city'].setValue('');
+    this.manageLocationService
+      .retrieveLocation(LocationField.DISTRICT.toLocaleLowerCase())
+      .subscribe({
+        next: (res: District[]) => {
+          if (res.length > 0) {
+            this.districtList = res
+              .filter(
+                (district: District) =>
+                  district.state === stateName &&
+                  district.country === this.orderForm.get('country')!.value
+              )
+              .map((districtItem) => districtItem.name);
+          }
+        },
+      });
+  };
+
+  changeDistrict = (districtName: string) => {
+    console.log(districtName);
+    this.orderForm.get('city')!.enable();
+    this.orderForm.controls['city'].setValue('');
+    this.manageLocationService
+      .retrieveLocation(LocationField.CITY.toLocaleLowerCase())
+      .subscribe({
+        next: (res: City[]) => {
+          if (res.length > 0) {
+            this.cityList = res
+              .filter(
+                (city: City) =>
+                  city.district === districtName &&
+                  city.state === this.orderForm.get('state')!.value &&
+                  city.country === this.orderForm.get('country')!.value
+              )
+              .map((cityItem) => cityItem.name);
+          }
+        },
+      });
   };
 }

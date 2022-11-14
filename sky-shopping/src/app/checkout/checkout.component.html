@@ -61,64 +61,67 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="city-field" appearance="fill">
-            <mat-label>City</mat-label>
-            <input
-              type="text"
-              name="city"
-              id="city"
-              matInput
-              formControlName="city"
-              placeholder="Veraval"
-            />
-            <mat-error *ngIf="orderForm.get('city')!.hasError('required')">
-              City is required filed
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="district-field" appearance="fill">
-            <mat-label>District</mat-label>
-            <input
-              type="text"
-              name="district"
-              id="district"
-              matInput
-              formControlName="district"
-              placeholder="Gir Somnath"
-            />
-            <mat-error *ngIf="orderForm.get('district')!.hasError('required')">
-              District is required filed
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="state-field" appearance="fill">
-            <mat-label>State</mat-label>
-            <input
-              type="text"
-              name="state"
-              id="state"
-              matInput
-              formControlName="state"
-              placeholder="Gujarat"
-            />
-            <mat-error *ngIf="orderForm.get('state')!.hasError('required')">
-              State is required filed
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="country-field" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label>Country</mat-label>
-            <input
-              type="text"
-              name="country"
-              id="country"
-              matInput
+            <mat-select
               formControlName="country"
-              placeholder="India"
-            />
-            <mat-error *ngIf="orderForm.get('country')!.hasError('required')">
-              Country is required filed
-            </mat-error>
+              required
+              (selectionChange)="changeCountry($event.value)"
+            >
+              <mat-option *ngFor="let country of countryList" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('country')!.hasError('required')"
+              >Country is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <mat-select
+              formControlName="state"
+              required
+              (selectionChange)="changeState($event.value)"
+            >
+              <mat-option *ngFor="let state of stateList" [value]="state">
+                {{ state }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('state')!.hasError('required')"
+              >State is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>District</mat-label>
+            <mat-select
+              formControlName="district"
+              required
+              (selectionChange)="changeDistrict($event.value)"
+            >
+              <mat-option
+                *ngFor="let district of districtList"
+                [value]="district"
+              >
+                {{ district }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('district')!.hasError('required')"
+              >District is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <mat-select formControlName="city" required>
+              <mat-option *ngFor="let city of cityList" [value]="city">
+                {{ city }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('city')!.hasError('required')"
+              >City is required</mat-error
+            >
           </mat-form-field>
 
           <mat-form-field class="postalCode-field" appearance="fill">
