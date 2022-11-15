@@ -14,6 +14,7 @@ functions:
   - ${file(./src/auth/auth.yml)}
   - ${file(./src/cart/cart.yml)}
   - ${file(./src/order/order.yml)}
+  - ${file(./src/chat/chat.yml)}
 
 custom:
   stage: ${opt:stage, self:provider.stage}

@@ -32,7 +32,7 @@ import {
   IAuthState,
 } from './shared/redux/auth.store';
 import { ManageLocationService } from './admin/manage-location/manage-location.service';
-import { ExponentialStrengthPipe } from './shared/pipes/exponential-strength.pipe';
+import { ChatWebsocketService } from './chat/chat.service';
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [
@@ -65,6 +65,7 @@ import { ExponentialStrengthPipe } from './shared/pipes/exponential-strength.pip
     CheckoutService,
     OrderService,
     ManageLocationService,
+    ChatWebsocketService,
   ],
   bootstrap: [AppComponent],
 })

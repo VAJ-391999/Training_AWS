@@ -7,6 +7,7 @@ import { ProductModule } from '../products/products.module';
 import { CartModule } from '../cart/cart.module';
 import { CheckoutModule } from '../checkout/chekout.module';
 import { OrderModule } from '../order/order.module';
+import { ChatModule } from '../chat/chat.module';
 
 @NgModule({
   declarations: [UserComponent, ProductsComponent],
@@ -17,6 +18,7 @@ import { OrderModule } from '../order/order.module';
     CartModule,
     CheckoutModule,
     OrderModule,
+    ChatModule,
   ],
 })
 export class UserModule {}

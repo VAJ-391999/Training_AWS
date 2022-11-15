@@ -1,0 +1,37 @@
+<app-loader></app-loader>
+<div class="chat">
+  <div class="chat-user-list">chat-user-list</div>
+  <div class="chat-box">
+    <div class="chat-user-header">chat-user-header</div>
+    <div class="chat-message-list">chat-message-list</div>
+    <div class="chat-form">
+      <form
+        [formGroup]="chatForm"
+        (ngSubmit)="onSubmit(chatForm)"
+        class="chat-form"
+      >
+        <div class="form-field">
+          <mat-form-field class="message-field" appearance="outline">
+            <mat-label>Message</mat-label>
+            <input
+              type="text"
+              name="message"
+              id="message"
+              matInput
+              formControlName="message"
+              placeholder="Message"
+            />
+            <mat-error *ngIf="chatForm.get('message')!.hasError('required')">
+              Message is required field
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="send-icon">
+          <button mat-icon-button [disabled]="!chatForm.valid" color="primary">
+            <mat-icon style="cursor: pointer">send</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+connectHandler:
+  handler: src/chat/functions/createConnection.ts
+  events:
+    - websocket:
+      route: $connect
+      authorizer: ${self:custom.authorizer.users}
+disconnectHandler:
+  handler: src/chat/functions/removeConnection.handler
+  events:
+    - websocket:
+        route: $disconnect
+        authorizer: ${self:custom.authorizer.users}
